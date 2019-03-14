@@ -1,0 +1,48 @@
+$image-ratio: 4 / 5; 
+
+.fade-carousel {
+    position: relative;
+
+    .clothing-images {
+        display: flex;
+        position: relative;
+
+        &::before {
+            content: "";
+            position: absolute;
+            width: 100vw;
+            height: 85%;
+            top: 0;
+            left: 0;
+            background: #f1f3f5;
+        }
+    }
+
+    .clothing-image-container {
+        max-width: 500px;
+        width: calc(85vh * #{$image-ratio});
+        margin-right: 50px;
+    }
+
+    .image-selector-container {
+        position: absolute;
+        right: 40px;
+        bottom: 20%;
+    }
+
+    .fade-enter {
+        opacity: 0.01;
+    }
+    .fade-enter-active {
+        opacity: 1;
+        transition: opacity 500ms ease-in;
+    }
+    .fade-exit {
+        opacity: 1;
+    }
+    .fade-exit-active {
+        opacity: 0.01;
+        transition: opacity 500ms ease-in;
+    }
+
+}

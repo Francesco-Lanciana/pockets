@@ -1,0 +1,40 @@
+.image-selector {
+    display: flex;
+    flex-direction: column;
+
+    .image-container {
+        cursor: pointer;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 12vh;
+        height: 12vh;
+        max-width: 50px;
+        max-height: 50px;
+        box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
+        background: white;
+        transition: all 0.2s;
+
+        @media screen and (min-width: 465px) {
+            border-radius: 4px;
+            width: 18vh;
+            max-width: 90px;
+            max-height: 60px;
+        }
+
+        &[data-shown="true"] {
+            opacity: 0.5;
+        }
+
+        &[data-selected="true"] {
+            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.18);
+        }
+    }
+
+    .image-container + .image-container {
+        margin-top: 15px;
+
+        @media screen and (min-height: 700px) {
+            margin-top: 25px;
+        }
+    }
+}
