@@ -8,7 +8,7 @@ import BackIcon from "@images/long-arrow-left-solid.svg";
 import "./ItemPage.scss";
 
 const ItemPage = ({ data }) => {
-    const { name, type, price, currency, images } = data.contentfulClothing;
+    const { name, type, price, currency, images, description } = data.contentfulClothing;
     const currencySymbol = getCurrencySymbol(currency);
     const qualifiedPrice = `${currencySymbol}${price}`;
 
@@ -21,6 +21,10 @@ const ItemPage = ({ data }) => {
             <div className="clothing-details">
                 <div className="clothing-name">{name}</div>
                 <div className="clothing-price">{qualifiedPrice}</div>
+                <div className="clothing-description">{description.description}</div>
+                <div className="clothing-link-container">
+                    <button className="clothing-link">Buy now</button>                
+                </div>
             </div>
         </div>
     );

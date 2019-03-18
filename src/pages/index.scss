@@ -1,17 +1,36 @@
 @import "@styles/_mixins.scss";
 
 .list-page {
+    .navbar {
+        padding: 10px;
+    }
+
+    .logo {
+        width: 120px;
+        height: 30px;
+    }
+
+    .brand-mission {
+        margin: 0 0 20px;
+        text-align: center;
+        font-size: 1.1rem;
+        font-weight: 700;
+        line-height: 2.5rem;
+        background: #9d3cff;
+        color: white;
+    }
+
     .clothing-cards {
         display: grid;
         grid-gap: 20px;
         grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
         max-width: 2400px;
         margin: 0 auto;
-        padding: 0 7%;
+        padding: 0 7% 30px;
+        justify-items: center;
 
-        @media screen and (max-width: 500px) {
+        @media screen and (max-width: 535px) {
             grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
-            justify-items: stretch;
         }
 
         @media screen and (min-width: 571px) {
@@ -24,6 +43,7 @@
         min-width: 170px;
         border-radius: 8px;
         overflow: hidden;
+        cursor: pointer;
         display: flex;
         box-shadow: 0 3px 3px rgba(0, 0, 0, 0.23);
     }

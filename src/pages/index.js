@@ -9,6 +9,8 @@ import ItemCard from "@components/ItemCard/ItemCard";
 
 import { getCurrencySymbol } from "@utils/currencyHelpers";
 
+import logo from "@images/logo.png";
+
 import "./index.scss";
 
 function getQualifiedPrice(currency, price) {
@@ -23,7 +25,9 @@ const IndexPage = ({ data }) => {
         <Layout>
             <div className="list-page">
                 <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-                <h1 className="brand-logo">Pockets</h1>
+                <div className="navbar">
+                    <img src={logo} className="logo"></img>
+                </div>
                 <h2 className="brand-mission">Functional style for every woman</h2>
 
                 <main className="clothing-cards">
