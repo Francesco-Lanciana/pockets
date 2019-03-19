@@ -66,7 +66,7 @@ export const query = graphql`
                     currency
                     images {
                         fluid(maxWidth: 320, maxHeight: 480) {
-                            ...GatsbyContentfulFluid_tracedSVG
+                            ...GatsbyContentfulFluid
                         }
                     }
                 }
