@@ -14,14 +14,23 @@ $image-ratio: 4 / 5;
             height: 85%;
             top: 0;
             left: 0;
-            background: #f1f3f5;
+            background: #F8F4EE;
         }
-    }
+
+        &[data-cropped-bottom="true"]::before {
+            height: 100%;
+        }
+     }
 
     .clothing-image-container {
         max-width: 500px;
         width: calc(85vh * #{$image-ratio});
         margin-right: 50px;
+    }
+
+    .clothing-image {
+        max-width: 500px;
+        max-height: 625px;
     }
 
     .image-selector-container {

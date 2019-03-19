@@ -3,34 +3,25 @@
 .list-page {
     .navbar {
         padding: 10px;
+        margin-top: env(safe-area-inset-top);
     }
 
     .logo {
-        width: 120px;
-        height: 30px;
-    }
-
-    .brand-mission {
-        margin: 0 0 20px;
-        text-align: center;
-        font-size: 1.1rem;
-        font-weight: 700;
-        line-height: 2.5rem;
-        background: #9d3cff;
-        color: white;
+        width: 255px;
     }
 
     .clothing-cards {
         display: grid;
         grid-gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
         max-width: 2400px;
         margin: 0 auto;
         padding: 0 7% 30px;
-        justify-items: center;
+        justify-items: stretch;
+        padding: 20px;
 
         @media screen and (max-width: 535px) {
-            grid-template-columns: repeat(auto-fit, minmax(170px,1fr));
+            grid-template-columns: 1fr 1fr;
         }
 
         @media screen and (min-width: 571px) {
@@ -40,7 +31,7 @@
 
     .clothing-card {
         max-width: 320px;
-        min-width: 170px;
+        min-width: 140px;
         border-radius: 8px;
         overflow: hidden;
         cursor: pointer;
@@ -49,10 +40,7 @@
     }
 
     .clothing-image-container {
-        // display: flex;
-        // justify-content: center;
-        // padding-bottom: 120%;
-        background: #f1f3f5;
+        background: #F8F4EE;
     }
 
     .clothing-image {

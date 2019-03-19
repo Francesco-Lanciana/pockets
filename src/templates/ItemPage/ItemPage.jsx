@@ -8,13 +8,13 @@ import BackIcon from "@images/long-arrow-left-solid.svg";
 import "./ItemPage.scss";
 
 const ItemPage = ({ data }) => {
-    const { name, type, price, currency, images, description } = data.contentfulClothing;
+    const { name, type, imagesMetaData, price, currency, images, description } = data.contentfulClothing;
     const currencySymbol = getCurrencySymbol(currency);
     const qualifiedPrice = `${currencySymbol}${price}`;
 
     return (
         <div className="item-page">
-            <FadeCarousel images={images}/>
+            <FadeCarousel images={images} imagesMetaData={imagesMetaData}/>
             <div className="back-icon-container" onClick={() => navigate("/")}>
                 <BackIcon />
             </div>
@@ -43,6 +43,11 @@ export const query = graphql`
             images {
                 fluid(maxWidth: 320, maxHeight: 480) {
                     ...GatsbyContentfulFluid_tracedSVG
+                }
+            }
+            imagesMetaData {
+                cropped {
+                    bottom
                 }
             }
             description {

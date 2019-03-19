@@ -28,7 +28,6 @@ const IndexPage = ({ data }) => {
                 <div className="navbar">
                     <img src={logo} className="logo"></img>
                 </div>
-                <h2 className="brand-mission">Functional style for every woman</h2>
 
                 <main className="clothing-cards">
                     {data.allContentfulClothing.edges.map(({ node: item }) => (

@@ -21,7 +21,11 @@ const propTypes = {
 };
 
 const MAX_IMAGE_WIDTH = 500;
-const MAX_IMAGE_HEIGHT_PX = (5/4) * MAX_IMAGE_WIDTH;
+const MAX_IMAGE_HEIGHT_PX = 625;
+
+const getImageWidth = (aspectRatio) => aspectRatio >= 1 ? MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX * aspectRatio;
+const getImageWidthVh = (aspectRatio) => aspectRatio >= 1 ? MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX * aspectRatio;
+const getImageHeight = (aspectRatio) => aspectRatio >= 1 ? (1 / aspectRatio) * MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX;
 const MAX_IMAGE_WIDTH_VH = (4/5) * 85;
 const GAP_LARGE_SCREENS = 35; // px
 const GAP_SMALL_SCREENS = 10; // vh
@@ -30,8 +34,10 @@ const SELECTOR_GAP_LARGE_SCREENS_PX = 150;
 const getTotalGapSmallScreens = (numImages) => (GAP_SMALL_SCREENS * (numImages - 1)) + SELECTOR_GAP_SMALL_SCREENS_VH;
 const getTotalGapLargeScreens = (numImages) => (GAP_LARGE_SCREENS * (numImages - 1)) + SELECTOR_GAP_LARGE_SCREENS_PX;
 
-const FadeCarousel = ({ images }) => {
+const FadeCarousel = ({ images, imagesMetaData }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+    const aspectRatio = images[0].fluid.aspectRatio;
+
     const numImagesShowing = useMedia(
         [
             `(min-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(4*MAX_IMAGE_WIDTH) + 3 * GAP_LARGE_SCREENS}px), (max-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(4*MAX_IMAGE_WIDTH_VH) + 3 * GAP_SMALL_SCREENS}vh)`,
@@ -56,12 +62,12 @@ const FadeCarousel = ({ images }) => {
 
     return (
         <div className="fade-carousel">
-            <TransitionGroup className="clothing-images">
-                {selectedImages.map((image) => (
+            <TransitionGroup className="clothing-images"  data-cropped-bottom={imagesMetaData.cropped.bottom}>
+                {selectedImages.map((image, i) => (
                     <CSSTransition classNames="fade" timeout={200} key={image.src}>
                         <div className="clothing-image-container" key={image.src}>
                             <Img
-                                sizes={{ ...image.fluid, aspectRatio: 4 / 5 }}
+                                sizes={{ ...image.fluid }}
                                 fluid={image.fluid}
                                 imgStyle={{ objectFit: "contain" }}
                                 className="clothing-image"
