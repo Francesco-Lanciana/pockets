@@ -2,6 +2,8 @@ import React from "react";
 import { graphql, navigate } from "gatsby";
 
 import FadeCarousel from "@components/FadeCarousel/FadeCarousel";
+import Layout from "@components/Layout/Layout";
+
 import { getCurrencySymbol } from "@utils/currencyHelpers";
 import BackIcon from "@images/long-arrow-left-solid.svg";
 
@@ -13,20 +15,22 @@ const ItemPage = ({ data }) => {
     const qualifiedPrice = `${currencySymbol}${price}`;
 
     return (
-        <div className="item-page">
-            <FadeCarousel images={images} imagesMetaData={imagesMetaData}/>
-            <div className="back-icon-container" onClick={() => navigate("/")}>
-                <BackIcon />
-            </div>
-            <div className="clothing-details">
-                <div className="clothing-name">{name}</div>
-                <div className="clothing-price">{qualifiedPrice}</div>
-                <div className="clothing-description">{description.description}</div>
-                <div className="clothing-link-container">
-                    <button className="clothing-link">Buy now</button>                
+        <Layout>
+            <div className="item-page">
+                <FadeCarousel images={images} imagesMetaData={imagesMetaData} />
+                <div className="back-icon-container" onClick={() => navigate("/")}>
+                    <BackIcon />
+                </div>
+                <div className="clothing-details">
+                    <div className="clothing-name">{name}</div>
+                    <div className="clothing-price">{qualifiedPrice}</div>
+                    <div className="clothing-description">{description.description}</div>
+                    <div className="clothing-link-container">
+                        <button className="clothing-link">Buy now</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </Layout>
     );
 };
 
