@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import Img from "gatsby-image";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 import ImageSelector from "@components/ImageSelector/ImageSelector";
-import { useMedia } from "@hooks/window-hooks";
 
 import "./FadeCarousel.scss";
 
@@ -20,35 +19,49 @@ const propTypes = {
     ),
 };
 
-const MAX_IMAGE_WIDTH = 400;
-const MAX_IMAGE_HEIGHT_PX = 520;
-
-const getImageWidth = (aspectRatio) => aspectRatio >= 1 ? MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX * aspectRatio;
-const getImageWidthVh = (aspectRatio) => aspectRatio >= 1 ? MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX * aspectRatio;
-const getImageHeight = (aspectRatio) => aspectRatio >= 1 ? (1 / aspectRatio) * MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX;
-const MAX_IMAGE_WIDTH_VH = (4/5) * 85;
-const GAP_LARGE_SCREENS = 35; // px
-const GAP_SMALL_SCREENS = 10; // vh
-const SELECTOR_GAP_SMALL_SCREENS_VH = 30;
-const SELECTOR_GAP_LARGE_SCREENS_PX = 150;
-const getTotalGapSmallScreens = (numImages) => (GAP_SMALL_SCREENS * (numImages - 1)) + SELECTOR_GAP_SMALL_SCREENS_VH;
-const getTotalGapLargeScreens = (numImages) => (GAP_LARGE_SCREENS * (numImages - 1)) + SELECTOR_GAP_LARGE_SCREENS_PX;
+const MAX_IMAGE_HEIGHT_PX = 480;
 
 const FadeCarousel = ({ images, imagesMetaData }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-    //const aspectRatio = images[0].fluid.aspectRatio;
+    const [numImagesShowing, setNumImagesShowing] = useState(1);
+    const calculatingImages = useRef(false);
+    const maxImages = images.length;
 
-    const numImagesShowing = useMedia(
-        [
-            `(min-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(4*MAX_IMAGE_WIDTH) + 3 * GAP_LARGE_SCREENS}px), (max-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(4*MAX_IMAGE_WIDTH_VH) + 3 * GAP_SMALL_SCREENS}vh)`,
-            `(min-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(3*MAX_IMAGE_WIDTH) + getTotalGapLargeScreens(3)}px), (max-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(3*MAX_IMAGE_WIDTH_VH) + getTotalGapSmallScreens(3)}vh)`,
-            `(min-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(2*MAX_IMAGE_WIDTH) + getTotalGapLargeScreens(2)}px), (max-height: ${MAX_IMAGE_HEIGHT_PX}px) and (min-width: ${(2*MAX_IMAGE_WIDTH_VH) + getTotalGapSmallScreens(2)}vh)`,
-        ],
-        // Column counts (relates to above media queries by array index)
-        [4, 3, 2],
-        // Default column count
-        1
-    );
+    useEffect(() => {
+        const imageAspectRatio = images[0].childImageSharp.fluid.aspectRatio;
+
+        function calculateNumShownImages() {
+            const windowHeight = window.innerHeight;
+            const windowWidth = window.innerWidth;
+            let numImages;
+
+            if (windowHeight > (MAX_IMAGE_HEIGHT_PX*(4/3))) {
+                numImages = Math.min(Math.floor((windowWidth - 150)/ (MAX_IMAGE_HEIGHT_PX*imageAspectRatio + 120)), maxImages);
+            } else {
+                const imageWidth = (3/4)*windowHeight*imageAspectRatio;
+                const imageGap = 0.05*windowWidth;
+
+                numImages = Math.min(Math.floor((windowWidth - 150) / (imageWidth + imageGap)), maxImages);
+            }
+            if (numImages < 1) setNumImagesShowing(1);
+            else setNumImagesShowing(numImages);
+            calculatingImages.current = false;
+        }
+
+        function handleResize(event) {
+            if (!calculatingImages.current) {
+                calculatingImages.current = true;
+                window.requestAnimationFrame(calculateNumShownImages);
+            }
+        }
+
+        window.addEventListener("resize", handleResize);
+        handleResize();
+
+        return function cleanup() {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
 
     function handleSelect(e) {
         const index = parseInt(e.currentTarget.getAttribute("data-index"));
@@ -56,8 +69,8 @@ const FadeCarousel = ({ images, imagesMetaData }) => {
         setSelectedImageIndex(index);
     }
 
-    const startImageIndex = selectedImageIndex + numImagesShowing > 4 ? 4 - numImagesShowing : selectedImageIndex;
-    const endImageIndex = Math.min(selectedImageIndex + numImagesShowing, 4);
+    const startImageIndex = selectedImageIndex + numImagesShowing > maxImages ? maxImages - numImagesShowing : selectedImageIndex;
+    const endImageIndex = Math.min(selectedImageIndex + numImagesShowing, maxImages);
     const selectedImages = images.slice(startImageIndex, endImageIndex);
 
     return (
@@ -65,7 +78,7 @@ const FadeCarousel = ({ images, imagesMetaData }) => {
             <TransitionGroup className="clothing-images"  data-cropped-bottom={imagesMetaData.cropped === "bottom"}>
                 {selectedImages.map((image, i) => (
                     <CSSTransition classNames="fade" timeout={200} key={image.childImageSharp.fluid.src}>
-                        <div className="clothing-image-container">
+                        <div className="clothing-image-container" style={{'--aspect-ratio': image.childImageSharp.fluid.aspectRatio}}>
                             <Img
                                 sizes={{ ...image.childImageSharp.fluid }}
                                 fluid={image.childImageSharp.fluid}
@@ -77,7 +90,7 @@ const FadeCarousel = ({ images, imagesMetaData }) => {
                 ))}
             </TransitionGroup>
             <div className="image-selector-container">
-                {numImagesShowing < 4 &&
+                {numImagesShowing < maxImages &&
                     <ImageSelector images={images} onSelect={handleSelect} selected={selectedImageIndex} shown={[startImageIndex, endImageIndex-1]}/>
                 }
             </div>

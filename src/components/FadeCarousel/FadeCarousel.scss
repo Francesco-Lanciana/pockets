@@ -24,19 +24,23 @@ $image-ratio: 4 / 5;
 
     .clothing-image-container {
         max-width: 400px;
-        width: calc(75vh * #{$image-ratio});
+        width: calc(75vh * var(--aspect-ratio));
         margin-right: 120px;
     }
 
     .clothing-image {
         max-width: 400px;
-        max-height: 520px;
+        max-height: 75vh;
+
+        @media screen and (min-height: 640px) {
+            max-height: 480px;
+        }
     }
 
     .image-selector-container {
         position: absolute;
         right: 40px;
-        bottom: 10%;
+        bottom: 20%;
     }
 
     .fade-enter {
@@ -44,10 +48,11 @@ $image-ratio: 4 / 5;
     }
     .fade-enter-active {
         opacity: 1;
-        transition: opacity 500ms ease-in;
+        transition: opacity 200ms ease-in;
     }
     .fade-exit {
         opacity: 1;
+        display: none;
     }
     .fade-exit-active {
         opacity: 0.01;

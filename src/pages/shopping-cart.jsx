@@ -68,7 +68,7 @@ export const query = graphql`
                     price
                     currency
                     images {
-                        fluid(maxWidth: 320, maxHeight: 480) {
+                        fluid(maxHeight: 480) {
                             ...GatsbyContentfulFluid
                         }
                     }

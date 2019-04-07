@@ -72,7 +72,7 @@ export const query = graphql`
                         id
                         description
                         metadata {
-                            cropped
+                            croppedBottom
                         }
                         localFiles {
                             childImageSharp {
