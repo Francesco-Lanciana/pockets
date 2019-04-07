@@ -10,7 +10,18 @@
     }
 
     .clothing-details {
+        display: flex;
         padding: 30px 40px 0;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+
+    .clothing-classifications {
+        width: 50%;
+    }
+
+    .clothing-quick-details {
+        width: 50%;
     }
 
     .clothing-name {
@@ -36,7 +47,7 @@
         width: 100%;
         letter-spacing: 0.1em;
         padding: 18px;
-        font-size: 1.2rem;
+        font-size: 1.0rem;
         text-decoration: none;
         text-align: center;
         text-transform: uppercase;

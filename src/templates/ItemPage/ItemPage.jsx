@@ -24,24 +24,30 @@ const ItemPage = ({ data }) => {
                     <BackIcon />
                 </Link>
                 <div className="clothing-details">
-                    <div className="clothing-name">{product.name}</div>
-                    <div className="clothing-price">{qualifiedPrice}</div>
-                    <div className="clothing-description">{product.description}</div>
-                    <div className="clothing-link-container">
-                        <button
-                            className="clothing-link"
-                            onClick={() => {
-                                onItemSelection("add", {
-                                    id: product.id,
-                                    name: product.name,
-                                    image: product.localFiles[0],
-                                    price,
-                                    currency,
-                                });
-                            }}
-                        >
-                            Buy now
-                        </button>
+                    <div className="clothing-classifications">
+                        <div className="clothing-pockets-classification" />
+                    </div>
+
+                    <div className="clothing-quick-details">
+                        <div className="clothing-name">{product.name}</div>
+                        <div className="clothing-price">{qualifiedPrice}</div>
+                        <div className="clothing-description">{product.description}</div>
+                        <div className="clothing-link-container">
+                            <button
+                                className="clothing-link"
+                                onClick={() => {
+                                    onItemSelection("add", {
+                                        id: product.id,
+                                        name: product.name,
+                                        image: product.localFiles[0],
+                                        price,
+                                        currency,
+                                    });
+                                }}
+                            >
+                                Add to cart
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -65,11 +71,11 @@ export const query = graphql`
                 type
                 description
                 metadata {
-                    cropped
+                    croppedBottom
                 }
                 localFiles {
                     childImageSharp {
-                        fluid(maxWidth: 320, maxHeight: 480) {
+                        fluid(maxHeight: 480) {
                             ...GatsbyImageSharpFluid_tracedSVG
                         }
                     }
