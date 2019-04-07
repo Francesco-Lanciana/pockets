@@ -1,0 +1,105 @@
+$main-color: #6394F8;
+$light-text: #ABB0BE;
+
+
+.shopping-cart {
+    margin: 20px 0;
+    background: rgba(255, 255, 255, 0.89);
+    width: 320px;
+    position: relative;
+    border-radius: 3px;
+    padding: 20px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
+    .shopping-cart-header {
+        border-bottom: 1px solid #e8e8e8;
+        padding-bottom: 15px;
+    }
+
+    .shopping-cart-total {
+        float: right;
+    }
+
+    .shopping-cart-items {
+        padding-top: 20px;
+        max-height: 270px;
+        overflow: scroll;
+        position: relative;
+
+        li {
+            margin-bottom: 18px;
+        }
+
+        img {
+            float: left;
+            margin-right: 12px;
+        }
+
+        .item-name {
+            display: block;
+            padding-top: 5px;
+            font-size: 16px;
+        }
+
+        .item-price {
+            color: $main-color;
+            margin-right: 8px;
+            font-size: 14px;
+        }
+
+        .item-quantity {
+            color: $light-text;
+            font-size: 14px;
+        }
+    }
+
+    .shopping-cart-item {
+        display: flex;
+    }
+
+    .shopping-cart-item-details {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        padding-right: 12px;
+    }
+
+    .shopping-cart-item-meta-details {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+    }
+
+    .clothing-image-container {
+        overflow: hidden;
+        max-height: 60px;
+        flex-basis: 60px;
+        margin-right: 10px;
+    }
+
+    &:after {
+        bottom: 100%;
+        left: 89%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-bottom-color: white;
+        border-width: 8px;
+        margin-left: -8px;
+    }
+
+    .checkout-btn {
+        background: #6394F8;
+        color: white;
+        text-align: center;
+        padding: 12px;
+        text-decoration: none;
+        display: block;
+        border-radius: 3px;
+        font-size: 16px;
+        margin-top: 20px;
+    }
+}

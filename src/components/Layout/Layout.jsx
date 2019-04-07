@@ -7,18 +7,19 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import Helmet from "react-helmet";
+
+import NavBar from "@components/NavBar/NavBar";
 
 import "@styles/main.scss";
 
-const Layout = ({ children }) => (
-    <>
-        <Helmet>
-            <meta name='viewport' content='initial-scale=1, viewport-fit=cover' />
-        </Helmet>
-        {children}
-    </>
-);
+const Layout = ({ children }) => {
+    return (
+        <React.Fragment>
+            <NavBar />
+            {children}
+        </React.Fragment>
+    );
+};
 
 Layout.propTypes = {
     children: PropTypes.node.isRequired,

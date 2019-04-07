@@ -117,5 +117,5 @@ export function getCurrencySymbol(isoCode) {
         TOP: "T$",
         AED: "د.إ"
     };
-    return codeMap[isoCode];
+    return codeMap[isoCode.toUpperCase()];
 }

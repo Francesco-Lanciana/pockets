@@ -1,8 +1,9 @@
-import React from "react";
-import { graphql, navigate } from "gatsby";
+import React, { useContext } from "react";
+import { graphql, Link } from "gatsby";
 
 import FadeCarousel from "@components/FadeCarousel/FadeCarousel";
 import Layout from "@components/Layout/Layout";
+import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
 
 import { getCurrencySymbol } from "@utils/currencyHelpers";
 import BackIcon from "@images/long-arrow-left-solid.svg";
@@ -10,23 +11,37 @@ import BackIcon from "@images/long-arrow-left-solid.svg";
 import "./ItemPage.scss";
 
 const ItemPage = ({ data }) => {
-    const { name, type, imagesMetaData, price, currency, images, description } = data.contentfulClothing;
+    const { onItemSelection } = useContext(ShoppingCartContext);
+    const { price, currency, product } = data.stripeSku;
     const currencySymbol = getCurrencySymbol(currency);
     const qualifiedPrice = `${currencySymbol}${price}`;
 
     return (
         <Layout>
             <div className="item-page">
-                <FadeCarousel images={images} imagesMetaData={imagesMetaData} />
-                <div className="back-icon-container" onClick={() => navigate("/")}>
+                <FadeCarousel images={product.localFiles} imagesMetaData={product.metadata} />
+                <Link className="back-icon-container" to="/">
                     <BackIcon />
-                </div>
+                </Link>
                 <div className="clothing-details">
-                    <div className="clothing-name">{name}</div>
+                    <div className="clothing-name">{product.name}</div>
                     <div className="clothing-price">{qualifiedPrice}</div>
-                    <div className="clothing-description">{description.description}</div>
+                    <div className="clothing-description">{product.description}</div>
                     <div className="clothing-link-container">
-                        <button className="clothing-link">Buy now</button>
+                        <button
+                            className="clothing-link"
+                            onClick={() => {
+                                onItemSelection("add", {
+                                    id: product.id,
+                                    name: product.name,
+                                    image: product.localFiles[0],
+                                    price,
+                                    currency,
+                                });
+                            }}
+                        >
+                            Buy now
+                        </button>
                     </div>
                 </div>
             </div>
@@ -37,25 +52,28 @@ const ItemPage = ({ data }) => {
 export default ItemPage;
 
 export const query = graphql`
-    query PageQuery($slug: String!) {
-        contentfulClothing(slug: { eq: $slug }) {
-            name
-            type
+    query PageQuery($id: String!) {
+        stripeSku(product: { id: { eq: $id } }) {
             price
-            shippingPrice
             currency
-            images {
-                fluid(maxWidth: 320, maxHeight: 480) {
-                    ...GatsbyContentfulFluid
-                }
+            inventory {
+                type
             }
-            imagesMetaData {
-                cropped {
-                    bottom
-                }
-            }
-            description {
+            product {
+                id
+                name
+                type
                 description
+                metadata {
+                    cropped
+                }
+                localFiles {
+                    childImageSharp {
+                        fluid(maxWidth: 320, maxHeight: 480) {
+                            ...GatsbyImageSharpFluid_tracedSVG
+                        }
+                    }
+                }
             }
         }
     }

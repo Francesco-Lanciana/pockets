@@ -8,10 +8,12 @@ exports.createPages = ({ graphql, actions }) => {
     // products, portfolio items, landing pages, etc.
     return graphql(`
         {
-            allContentfulClothing {
+            allStripeSku {
                 edges {
                     node {
-                        slug
+                        product {
+                            id
+                        }
                     }
                 }
             }
@@ -22,15 +24,15 @@ exports.createPages = ({ graphql, actions }) => {
         }
 
         // Create clothing item pages.
-        result.data.allContentfulClothing.edges.forEach((item) => {
-            const { slug } = item.node;
+        result.data.allStripeSku.edges.forEach((item) => {
+            const { id } = item.node.product;
 
             createPage({
                 // Path for this page — required
-                path: `clothing/${slug}`,
+                path: `clothing/${id}`,
                 component: itemPageTemplate,
                 context: {
-                    slug
+                    id,
                     // Add optional context data to be inserted
                     // as props into the page component..
                     //

@@ -17,6 +17,7 @@
     "gatsby-plugin-sharp": "^2.0.23",
     "gatsby-source-contentful": "^2.0.33",
     "gatsby-source-filesystem": "^2.0.23",
+    "gatsby-source-stripe": "^2.1.7",
     "gatsby-transformer-sharp": "^2.1.15",
     "node-sass": "^4.11.0",
     "prop-types": "^15.7.2",

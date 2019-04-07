@@ -30,15 +30,15 @@ const ImageSelector = ({ images, selected, shown, onSelect }) => {
             {images.map((image, i) => (
                 <div
                     className="image-container"
-                    key={image.src}
+                    key={image.childImageSharp.fluid.src}
                     data-index={i}
                     data-selected={i === selected}
                     data-shown={isImageShown(i)}
                     onClick={onSelect}
                 >
                     <Img
-                        sizes={{ ...image.fluid, aspectRatio: 4 / 5 }}
-                        fluid={image.fluid}
+                        sizes={{ ...image.childImageSharp.fluid, aspectRatio: 4 / 5 }}
+                        fluid={image.childImageSharp.fluid}
                         imgStyle={{ objectFit: "contain" }}
                         className="clothing-image"
                     />

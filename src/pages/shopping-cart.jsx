@@ -1,5 +1,6 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link } from "gatsby";
+import { graphql } from "gatsby";
 import Img from "gatsby-image";
 
 import Layout from "@components/Layout/Layout";
@@ -26,25 +27,25 @@ const IndexPage = ({ data }) => {
                 <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
 
                 <main className="clothing-cards">
-                    {data.allStripeSku.edges.map(({ node: sku }) => (
-                        <div className="clothing-card" key={sku.product.id}>
-                            <Link to={`/clothing/${sku.product.id}`} className="item-link">
+                    {data.allContentfulClothing.edges.map(({ node: item }) => (
+                        <div className="clothing-card" key={item.slug}>
+                            <Link to={`/clothing/${item.slug}`} className="item-link">
                                 <div
                                     className="clothing-image-container"
-                                    data-cropped-bottom={sku.product.metadata.cropped === "bottom"}
-                                    data-cropped-top={sku.product.metadata.cropped === "top"}
+                                    data-cropped-bottom={item.imagesMetaData.cropped.bottom}
+                                    data-cropped-top={item.imagesMetaData.cropped.top}
                                 >
                                     <Img
-                                        sizes={{ ...sku.product.localFiles[0].childImageSharp.fluid, aspectRatio: 4 / 5 }}
-                                        fluid={sku.product.localFiles[0].childImageSharp.fluid}
+                                        sizes={{ ...item.images[0].fluid, aspectRatio: 4 / 5 }}
+                                        fluid={item.images[0].fluid}
                                         imgStyle={{ objectFit: "contain" }}
                                         className="clothing-image"
                                     />
                                 </div>
                                 <div className="clothing-details">
-                                    <div className="clothing-name">{sku.product.name}</div>
+                                    <div className="clothing-name">{item.name}</div>
                                     <div className="clothing-price">
-                                        {getQualifiedPrice(sku.currency, sku.price)}
+                                        {getQualifiedPrice(item.currency, item.price)}
                                     </div>
                                 </div>
                             </Link>
@@ -58,28 +59,23 @@ const IndexPage = ({ data }) => {
 
 export const query = graphql`
     query {
-        allStripeSku {
+        allContentfulClothing {
             edges {
                 node {
+                    slug
+                    name
+                    type
                     price
                     currency
-                    inventory {
-                        type
-                    }
-                    product {
-                        name
-                        type
-                        id
-                        description
-                        metadata {
-                            cropped
+                    images {
+                        fluid(maxWidth: 320, maxHeight: 480) {
+                            ...GatsbyContentfulFluid
                         }
-                        localFiles {
-                            childImageSharp {
-                                fluid(maxWidth: 320, maxHeight: 480) {
-                                    ...GatsbyImageSharpFluid_tracedSVG
-                                }
-                            }
+                    }
+                    imagesMetaData {
+                        cropped {
+                            bottom
+                            top
                         }
                     }
                 }

@@ -23,20 +23,20 @@ $image-ratio: 4 / 5;
      }
 
     .clothing-image-container {
-        max-width: 500px;
-        width: calc(85vh * #{$image-ratio});
-        margin-right: 50px;
+        max-width: 400px;
+        width: calc(75vh * #{$image-ratio});
+        margin-right: 120px;
     }
 
     .clothing-image {
-        max-width: 500px;
-        max-height: 625px;
+        max-width: 400px;
+        max-height: 520px;
     }
 
     .image-selector-container {
         position: absolute;
         right: 40px;
-        bottom: 20%;
+        bottom: 10%;
     }
 
     .fade-enter {

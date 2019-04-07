@@ -5,3 +5,10 @@
  */
 
 // You can delete this file if you're not using it
+import React from "react"
+
+import { ShoppingCartProvider } from "@context/ShoppingCartContext/ShoppingCartContext"
+
+export const wrapRootElement = ({ element }) => (
+  <ShoppingCartProvider>{element}</ShoppingCartProvider>
+)

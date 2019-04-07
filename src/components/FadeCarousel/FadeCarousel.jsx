@@ -20,8 +20,8 @@ const propTypes = {
     ),
 };
 
-const MAX_IMAGE_WIDTH = 500;
-const MAX_IMAGE_HEIGHT_PX = 625;
+const MAX_IMAGE_WIDTH = 400;
+const MAX_IMAGE_HEIGHT_PX = 520;
 
 const getImageWidth = (aspectRatio) => aspectRatio >= 1 ? MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX * aspectRatio;
 const getImageWidthVh = (aspectRatio) => aspectRatio >= 1 ? MAX_IMAGE_WIDTH : MAX_IMAGE_HEIGHT_PX * aspectRatio;
@@ -36,7 +36,7 @@ const getTotalGapLargeScreens = (numImages) => (GAP_LARGE_SCREENS * (numImages -
 
 const FadeCarousel = ({ images, imagesMetaData }) => {
     const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-    const aspectRatio = images[0].fluid.aspectRatio;
+    //const aspectRatio = images[0].fluid.aspectRatio;
 
     const numImagesShowing = useMedia(
         [
@@ -62,13 +62,13 @@ const FadeCarousel = ({ images, imagesMetaData }) => {
 
     return (
         <div className="fade-carousel">
-            <TransitionGroup className="clothing-images"  data-cropped-bottom={imagesMetaData.cropped.bottom}>
+            <TransitionGroup className="clothing-images"  data-cropped-bottom={imagesMetaData.cropped === "bottom"}>
                 {selectedImages.map((image, i) => (
-                    <CSSTransition classNames="fade" timeout={200} key={image.src}>
-                        <div className="clothing-image-container" key={image.src}>
+                    <CSSTransition classNames="fade" timeout={200} key={image.childImageSharp.fluid.src}>
+                        <div className="clothing-image-container">
                             <Img
-                                sizes={{ ...image.fluid }}
-                                fluid={image.fluid}
+                                sizes={{ ...image.childImageSharp.fluid }}
+                                fluid={image.childImageSharp.fluid}
                                 imgStyle={{ objectFit: "contain" }}
                                 className="clothing-image"
                             />

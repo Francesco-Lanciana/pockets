@@ -13,14 +13,18 @@
     .clothing-cards {
         display: grid;
         grid-gap: 20px;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         max-width: 2400px;
         margin: 0 auto;
         padding: 0 7% 30px;
         justify-items: stretch;
         padding: 20px;
 
-        @media screen and (max-width: 535px) {
+        @media screen and (max-width: 1020px) {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        @media screen and (max-width: 700px) {
             grid-template-columns: 1fr 1fr;
         }
 
@@ -30,17 +34,19 @@
     }
 
     .clothing-card {
-        max-width: 320px;
         min-width: 140px;
-        border-radius: 8px;
         overflow: hidden;
         cursor: pointer;
         display: flex;
-        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.23);
     }
 
     .clothing-image-container {
-        background: #F8F4EE;
+        background: linear-gradient(#F8F4EE, #fff0d9);
+        
+
+        // &[data-cropped-bottom="false"] {
+        //     padding-bottom: 10px;
+        // }
     }
 
     .clothing-image {
@@ -50,40 +56,32 @@
     .clothing-details {
         padding: 10px 15px 20px 20px;
         display: flex;
-
-        @media screen and (max-width: 830px) {
-            flex-direction: column;
-            text-align: center;
-            padding-bottom: 10px;
-        }
+        flex-direction: column;
+        text-align: center;
+        padding-bottom: 10px;
+        height: 90px;
     }
 
     .clothing-name {
-        @include fluid-type(750px, 850px, 13px, 15px);
+        font-size: 14px;
         line-height: 18px;
         display: inline-block;
         color: #393c45;
-        font-weight: 700;
         text-transform: uppercase;
         margin: 0;
-        flex: 1 1 auto;
+        flex: 0 1 auto;
+        margin-bottom: 5px;
     }
 
     .clothing-price {
-        @include fluid-type(750px, 850px, 13px, 18px);
+        font-size: 14px;
         line-height: 20px;
         margin: 0;
-        text-align: right;
+        text-align: center;
         display: inline-block;
         vertical-align: top;
         padding-left: 10px;
         min-width: 70px;
-
-        @media screen and (max-width: 830px) {
-            margin-top: 3px;
-            padding-left: 0;
-            text-align: inherit;
-        }
     }
 
     .item-link {

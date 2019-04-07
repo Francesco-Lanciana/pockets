@@ -51,11 +51,21 @@ module.exports = {
           "@utils": path.resolve(__dirname, 'src/utils'),
           "@images": path.resolve(__dirname, 'src/images'),
           "@hooks": path.resolve(__dirname, 'src/hooks'),
+          "@context": path.resolve(__dirname, 'src/context'),
         },
         extensions: [],
       },
     },
     'gatsby-plugin-react-svg',
+    {
+        resolve: 'gatsby-source-stripe',
+        options: {
+          objects: ['Sku'],
+          secretKey: process.env.STRIPE_SECRET_KEY,
+          downloadFiles: true,
+          auth: false
+        }
+      }
     //`gatsby-plugin-layout`
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
