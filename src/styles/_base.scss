@@ -23,9 +23,9 @@ html {
 	font-family: "Open Sans", sans-serif; 
     overflow-y: scroll; // Avoids content jumping between pages that do/don't have a scrollbar
 
-    @media screen and (max-width: $phablet-breakpoint) {
-        font-size: #{$mobile-fs * 100 + '%'};
-    }
+    // @media screen and (max-width: $phablet-breakpoint) {
+    //     font-size: #{$mobile-fs * 100 + '%'};
+    // }
 }
 
 /*##################################
