@@ -1,0 +1,47 @@
+.footer {
+    background: #222222;
+    color: white;
+    padding-bottom: 40px;
+
+    .content-container {
+        max-width: 1280px;
+        display: flex;
+        margin: 0 auto;
+        padding: 0px 30px;
+    }
+
+    .category-label {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .links-container {
+        width: 220px;
+    }
+
+    .links-container > ul {
+        font-size: 0.6rem;
+        list-style: none;
+    }
+    .links-container li {
+        display: flex;
+        align-items: center;
+    }
+
+    .links-container a {
+        text-decoration: none;
+        line-height: 20px;
+        color: inherit;
+    }
+
+    .logo-container {
+        display: inline-block;
+        width: 12px;
+        margin-right: 6px;
+    }
+
+    .logo-container.facebook {
+        width: 6px;
+    }
+}
