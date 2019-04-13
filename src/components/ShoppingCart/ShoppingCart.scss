@@ -91,6 +91,13 @@ $light-text: #ABB0BE;
         margin-left: -8px;
     }
 
+    .empty-cart-message {
+        text-align: center;
+        padding: 10px;
+        color: #383838;
+        line-height: 1.4;
+    }
+
     .checkout-btn {
         background: #6394F8;
         color: white;
@@ -101,5 +108,13 @@ $light-text: #ABB0BE;
         border-radius: 3px;
         font-size: 16px;
         margin-top: 20px;
+        width: 100%;
+        border: none;
+    }
+
+    .checkout-btn:disabled {
+        background: inherit;
+        border: 1px solid rgba(140,140,140,0.5);
+        color: rgba(140,140,140,0.5);
     }
 }

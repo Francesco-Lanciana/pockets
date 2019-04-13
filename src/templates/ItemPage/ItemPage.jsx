@@ -12,7 +12,7 @@ import "./ItemPage.scss";
 
 const ItemPage = ({ data }) => {
     const { onItemSelection } = useContext(ShoppingCartContext);
-    const { price, currency, product } = data.stripeSku;
+    const { price, currency, product, id } = data.stripeSku;
     const currencySymbol = getCurrencySymbol(currency);
     const qualifiedPrice = `${currencySymbol}${price}`;
 
@@ -37,7 +37,7 @@ const ItemPage = ({ data }) => {
                                 className="clothing-link"
                                 onClick={() => {
                                     onItemSelection("add", {
-                                        id: product.id,
+                                        id,
                                         name: product.name,
                                         image: product.localFiles[0],
                                         price,
@@ -60,6 +60,7 @@ export default ItemPage;
 export const query = graphql`
     query PageQuery($id: String!) {
         stripeSku(product: { id: { eq: $id } }) {
+            id
             price
             currency
             inventory {
