@@ -1,13 +1,20 @@
 import { useState, useEffect } from "react";
 
 export function useMedia(queries, values, defaultValue) {
+    const isSingleQuery = !Array.isArray(queries);
+    const isSingleValue = !Array.isArray(values);
+    const queriesArray = isSingleQuery ? [queries] : queries;
+
     // Array containing a media query list for each query
-    const mediaQueryLists = queries.map((q) => typeof window !== 'undefined' ? window.matchMedia(q) : { matches: true });
+    const mediaQueryLists = queriesArray.map((q) => typeof window !== 'undefined' ? window.matchMedia(q) : { matches: true });
 
     // Function that gets value based on matching media query
-    const getValue = () => {
+    const getValue = () => {        
         // Get index of first media query that matches
         const index = mediaQueryLists.findIndex((mql) => mql.matches);
+
+        if (isSingleQuery && isSingleValue) return index === 0 ? values : defaultValue;
+
         // Return related value or defaultValue if none
         return typeof values[index] !== "undefined" ? values[index] : defaultValue;
     };

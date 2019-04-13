@@ -1,0 +1,12 @@
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    font-size: 14px;
+
+    .nav-item-content {
+        display: flex;
+        padding: 12px 15px;
+    }
+}
