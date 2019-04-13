@@ -2,13 +2,10 @@ import React from "react";
 import { Link, graphql } from "gatsby";
 import Img from "gatsby-image";
 
-import Layout from "@components/Layout/Layout";
 import SEO from "../components/seo";
-import ItemCard from "@components/ItemCard/ItemCard";
+import Layout from "@components/Layout/Layout";
 
 import { getCurrencySymbol } from "@utils/currencyHelpers";
-
-import logo from "@images/logo.png";
 
 import "./index.scss";
 
