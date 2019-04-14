@@ -7,7 +7,7 @@
         border-radius: 50%;
         overflow: hidden;
         width: 12vh;
-        height: 12vh;
+        height: 10vh;
         max-width: 50px;
         max-height: 50px;
         box-shadow: 0 1px 1px rgba(0, 0, 0, 0.08);
@@ -16,7 +16,7 @@
 
         @media screen and (min-width: 465px) {
             border-radius: 4px;
-            width: 18vh;
+            width: 14vh;
             max-width: 90px;
             max-height: 60px;
         }
