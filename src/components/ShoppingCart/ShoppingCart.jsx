@@ -19,7 +19,7 @@ const ShoppingCart = ({ items }) => {
     const numItems = items.reduce((total, { quantity }) => total + quantity, 0);
     const totalPrice = items.reduce((total, { price, quantity }) => total + price * quantity, 0);
     const currencySymbol = getCurrencySymbol("aud");
-    const qualifiedTotalPrice = `${currencySymbol}${totalPrice / 100}`;
+    const qualifiedTotalPrice = `${currencySymbol}${(totalPrice/100).toFixed(2)}`;
     const cartIsEmpty = items.length === 0;
 
     useEffect(() => {
@@ -72,8 +72,8 @@ const ShoppingCart = ({ items }) => {
                         <div className="shopping-cart-item-details">
                             <div className="item-name">{item.name}</div>
                             <div className="shopping-cart-item-meta-details">
-                                <span className="item-price">{`${currencySymbol}${item.price /
-                                    100}`}</span>
+                                <span className="item-price">{`${currencySymbol}${(item.price /
+                                    100).toFixed(2)}`}</span>
                                 <span className="item-quantity">Quantity: {item.quantity}</span>
                             </div>
                         </div>
