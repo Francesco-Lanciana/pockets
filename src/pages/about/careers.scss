@@ -1,3 +1,14 @@
 .careers-page {
     padding: 40px;
+
+    .hook {
+        font-size: 2.7rem;
+        line-height: 3.5rem;
+    }
+
+    .focus {
+        color: transparent;
+        background: linear-gradient(to right, #FFB7B7, #FF7192);
+        background-clip: text;
+    }
 }

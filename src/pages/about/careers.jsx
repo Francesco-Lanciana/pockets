@@ -6,7 +6,7 @@ import "./careers.scss";
 const CareersPage = () => (
     <Layout>
         <div className="careers-page">
-            <h1>Help us bring womens fashion into the 21st century</h1>
+            <h1 className="hook">Help us bring womens fashion into the <div className="focus">21st century</div></h1>
             <p>
                 We want to finally make a marketplace for womens clothing that caters to the woman that
                 craves functional, affordable clothing that is exactly what it says it's going to be. No
