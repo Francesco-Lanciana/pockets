@@ -27,6 +27,7 @@
     .links-container li {
         display: flex;
         align-items: center;
+        cursor: pointer;
     }
 
     .links-container a {
@@ -43,5 +44,7 @@
 
     .logo-container.facebook {
         width: 6px;
+        margin-right: 9px;
+        margin-left: 3px;
     }
 }
