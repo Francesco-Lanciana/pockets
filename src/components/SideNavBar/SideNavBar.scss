@@ -1,5 +1,5 @@
 $side-nav-width: 220px;
-$light-text: rgb(112,112,112);
+$light-text: rgb(112, 112, 112);
 
 .side-nav-bar {
     position: fixed;
@@ -12,10 +12,19 @@ $light-text: rgb(112,112,112);
     box-shadow: inset -1px 0 0 #e5e5e5;
     transition: transform 0.3s;
     color: $light-text;
-    transform: translate3d(0, 0, 0); // Creates a new stacking context that allows floating nav sub items to be positioned relative to the top of the nav, rather than the page.
+    transform: translate3d(
+        0,
+        0,
+        0
+    ); // Creates a new stacking context that allows floating nav sub items to be positioned relative to the top of the nav, rather than the page.
 
     &[data-hidden="true"] {
         transform: translateX(-#{$side-nav-width});
+    }
+
+    .top-level-items-container {
+        height: 100%;
+        overflow-y: scroll;
     }
 
     .top-level-items {
@@ -28,5 +37,11 @@ $light-text: rgb(112,112,112);
     .top-level-items > li {
         white-space: nowrap;
         position: static;
+    }
+
+    .nav-bar-header {
+        line-height: 60px;
+        text-align: center;
+        background: #eaeaea;
     }
 }

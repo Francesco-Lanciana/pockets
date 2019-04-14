@@ -21,6 +21,7 @@ const SideNavBar = ({ children, onSelectItem, selectedItemId, hidden }) => {
         <selectedItemContext.Provider value={{ selectedItemId, onSelectItem }}>
             <nav className="side-nav-bar" data-hidden={hidden}>
                 <div className="top-level-items-container">
+                    <div className="nav-bar-header">Categories</div>
                     <ul className="top-level-items">{wrappedNavItems}</ul>
                 </div>
             </nav>
