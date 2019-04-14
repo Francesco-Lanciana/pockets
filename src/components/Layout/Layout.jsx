@@ -6,6 +6,7 @@
  */
 
 import React, { useState } from "react";
+import { CSSTransition } from "react-transition-group";
 import PropTypes from "prop-types";
 
 import NavBar from "@components/NavBar/NavBar";
@@ -20,7 +21,7 @@ const Layout = ({ children }) => {
     const [selectedItemId, setSelectedItemId] = useState();
 
     function handleSelectItem(id) {
-        setTimeout(() => setIsMenuHidden(false), 200);
+        setTimeout(() => setIsMenuHidden(true), 200);
         setSelectedItemId(id);
     }
 
@@ -29,7 +30,7 @@ const Layout = ({ children }) => {
     }
 
     return (
-        <React.Fragment>
+        <div className="layout">
             <NavBar onToggleMenu={handleToggleMenu} />
             <SideNavBar
                 onSelectItem={handleSelectItem}
@@ -49,10 +50,12 @@ const Layout = ({ children }) => {
                     Leggings
                 </NavItem>
             </SideNavBar>
-            {!isMenuHidden && <div className="mobile-overlay" onClick={handleToggleMenu} />}
+            <CSSTransition classNames="fade" timeout={200} in={!isMenuHidden} unmountOnExit>
+                <div className="mobile-overlay" onClick={handleToggleMenu} />
+            </CSSTransition>
             {children}
             <Footer />
-        </React.Fragment>
+        </div>
     );
 };
 
