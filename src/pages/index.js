@@ -11,7 +11,7 @@ import "./index.scss";
 
 function getQualifiedPrice(currency, price) {
     const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = `${currency} ${currencySymbol}${price}`;
+    const qualifiedPrice = `${currency.toUpperCase()} ${currencySymbol}${(price/100).toFixed(2)}`;
 
     return qualifiedPrice;
 }
@@ -20,7 +20,7 @@ const IndexPage = ({ data }) => {
     return (
         <Layout>
             <div className="list-page">
-                <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+                
 
                 <main className="clothing-cards">
                     {data.allStripeSku.edges.map(({ node: sku }) => (

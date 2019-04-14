@@ -66,3 +66,7 @@ h4, h5, h6 {
 p, h2, h3, h4, h5, h6, ul, ol {
     max-width: 40rem;
 }
+
+p {
+    @include line-height(1.1);
+}
