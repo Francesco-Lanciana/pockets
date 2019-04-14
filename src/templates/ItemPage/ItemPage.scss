@@ -3,15 +3,19 @@
     
     .back-icon-container {
         position: absolute;
-        top: 10px;
-        left: 20px;
+        top: 0;
+        left: 0;
+        padding: 10px 10px 0 10px;
+        box-sizing: content-box;
         width: 25px;
         cursor: pointer;
+        color: white;
+        background: #0000002e;
     }
 
     .clothing-details {
         display: flex;
-        padding: 30px 40px 0;
+        padding: 30px 40px;
         max-width: 1200px;
         margin: 0 auto;
     }

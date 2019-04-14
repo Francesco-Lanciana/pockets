@@ -4,6 +4,7 @@ import { graphql, Link } from "gatsby";
 import FadeCarousel from "@components/FadeCarousel/FadeCarousel";
 import Layout from "@components/Layout/Layout";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
+import SEO from "@components/seo";
 
 import { getCurrencySymbol } from "@utils/currencyHelpers";
 import BackIcon from "@images/long-arrow-left-solid.svg";
@@ -14,11 +15,23 @@ const ItemPage = ({ data }) => {
     const { onItemSelection } = useContext(ShoppingCartContext);
     const { price, currency, product, id } = data.stripeSku;
     const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = `${currencySymbol}${price}`;
+    const qualifiedPrice = `${currencySymbol}${(price/100).toFixed(2)}`;
 
     return (
         <Layout>
             <div className="item-page">
+                <SEO
+                    type="item"
+                    metadata={{
+                        name: product.name,
+                        description: product.description,
+                        price,
+                        currency,
+                        imageUrl: product.localFiles[0].childImageSharp.fluid.src,
+                        sku: id,
+                    }}
+                />
+
                 <FadeCarousel images={product.localFiles} imagesMetaData={product.metadata} />
                 <Link className="back-icon-container" to="/">
                     <BackIcon />
@@ -58,7 +71,7 @@ const ItemPage = ({ data }) => {
 export default ItemPage;
 
 export const query = graphql`
-    query PageQuery($id: String!) {
+    query ItemPageQuery($id: String!) {
         stripeSku(product: { id: { eq: $id } }) {
             id
             price
@@ -76,7 +89,7 @@ export const query = graphql`
                 }
                 localFiles {
                     childImageSharp {
-                        fluid(maxHeight: 480) {
+                        fluid(maxWidth: 400) {
                             ...GatsbyImageSharpFluid_tracedSVG
                         }
                     }
