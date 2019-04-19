@@ -53,6 +53,10 @@ $max-image-height-uncapped: 75vh;
         position: absolute;
         right: 40px;
         bottom: 20%;
+
+        @media screen and (max-width: 465px) {
+            right: 20px;
+        }
     }
 
     .fade-enter {

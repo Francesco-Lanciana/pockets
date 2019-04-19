@@ -109,7 +109,7 @@ const FadeCarousel = ({ images, imagesMetaData }) => {
                                     <Img
                                         sizes={{ ...image.childImageSharp.fluid }}
                                         fluid={image.childImageSharp.fluid}
-                                        imgStyle={{ objectFit: "contain" }}
+                                        imgStyle={{ objectFit: "cover" }}
                                         className="clothing-image"
                                     />
                                 </div>
