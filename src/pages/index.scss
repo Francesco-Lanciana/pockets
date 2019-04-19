@@ -28,13 +28,21 @@
             grid-template-columns: 1fr 1fr;
         }
 
+        @media screen and (max-width: 571px) {
+            padding: 20px 10px;
+            grid-gap: 10px;
+        }
+
+        @media screen and (max-width: 300px) {
+            grid-template-columns: 1fr;
+        }
+
         @media screen and (min-width: 571px) {
             padding: 40px;
         }
     }
 
     .clothing-card {
-        min-width: 140px;
         overflow: hidden;
         cursor: pointer;
         display: flex;
@@ -42,11 +50,6 @@
 
     .clothing-image-container {
         background: #F8F4EE;
-        
-
-        // &[data-cropped-bottom="false"] {
-        //     padding-bottom: 10px;
-        // }
     }
 
     .clothing-image {

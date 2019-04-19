@@ -20,8 +20,6 @@ const IndexPage = ({ data }) => {
     return (
         <Layout>
             <div className="list-page">
-                
-
                 <main className="clothing-cards">
                     {data.allStripeSku.edges.map(({ node: sku }) => (
                         <div className="clothing-card" key={sku.product.id}>
