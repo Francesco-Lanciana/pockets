@@ -20,6 +20,10 @@ $max-image-height-uncapped: 75vh;
         &[data-cropped-bottom="true"]::before {
             height: 100%;
         }
+
+        @media screen and (orientation: landscape) {
+            padding-left: env(safe-area-inset-left);
+        }
      }
 
      .clothing-images-inner-container {
