@@ -1,13 +1,36 @@
+$small-breakpoint: 440px;
+$med-breakpoint: 700px;
+$large-breakpoint: 900px;
+$large-link-height: 30px;
+$small-link-height: 25px;
+
 .footer {
     background: #222222;
     color: white;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
+    overflow: hidden; // Super edge case at super small screen sizes
 
     .content-container {
-        max-width: 1280px;
-        display: flex;
+        max-width: $large-breakpoint;
+        display: grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-template-rows: 1fr auto;
+        grid-gap: 0 20px;
         margin: 0 auto;
-        padding: 0px 30px;
+        padding: 0px 40px;
+
+        @media screen and (max-width: $small-breakpoint) {
+            padding: 0px 15px;
+            grid-template-columns: 1.3fr 1fr;
+        }
+
+        @media screen and (min-width: $small-breakpoint) and (max-width: $med-breakpoint) {
+            grid-template-columns: 0.9fr 1fr;
+        }
+
+        @media screen and (min-width: $large-breakpoint) {
+            margin: 0 auto 0 calc((100% - #{$large-breakpoint}) * 0.3);
+        }
     }
 
     .category-label {
@@ -16,24 +39,59 @@
         margin-bottom: 0.5rem;
     }
 
-    .links-container {
-        width: 220px;
+    .links-container > ul {
+        font-size: 0.7rem;
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
     }
 
-    .links-container > ul {
-        font-size: 0.6rem;
-        list-style: none;
-    }
     .links-container li {
         display: flex;
         align-items: center;
         cursor: pointer;
+        width: 100%;
+        height: $large-link-height; // Don't use line-height, this makes links that wrap look like two seperate links
+
+        @media screen and (max-width: $small-breakpoint) {
+            height: $small-link-height;
+        }
     }
 
     .links-container a {
         text-decoration: none;
-        line-height: 20px;
         color: inherit;
+        line-height: 1;
+    }
+
+    .about-links {
+        grid-row: 1 / -1;
+        grid-column: 1;
+
+        @media screen and (max-width: $small-breakpoint) {
+            grid-row: 1;
+        }
+    }
+
+    .help-links {
+        & li {
+            @media screen and (min-width: $small-breakpoint) and (max-width: $med-breakpoint) {
+                width: 50%;
+            }
+        }
+    }
+
+    .follow-links {
+        & li {
+            @media screen and (max-width: $med-breakpoint) {
+                width: 50%;
+            }
+        }
+
+        @media screen and (max-width: $small-breakpoint) {
+            grid-column: 1 / -1;
+
+        }
     }
 
     .logo-container {

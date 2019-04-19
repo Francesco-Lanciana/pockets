@@ -11,7 +11,7 @@ import "./Footer.scss";
 const Footer = () => (
     <footer className="footer">
         <div className="content-container">
-            <section className="links-container">
+            <section className="links-container about-links">
                 <h4 className="category-label">About us</h4>
                 <ul>
                     <li>
@@ -32,8 +32,8 @@ const Footer = () => (
                 </ul>
             </section>
 
-            <section className="links-container">
-                <h4 className="category-label">Customer Care</h4>
+            <section className="links-container help-links">
+                <h4 className="category-label">Help and Support</h4>
                 <ul>
                     <li>
                         <Link to="/about/shipping">Shipping</Link>
@@ -47,7 +47,7 @@ const Footer = () => (
                 </ul>
             </section>
 
-            <section className="links-container">
+            <section className="links-container follow-links">
                 <h4 className="category-label">Follow us</h4>
                 <ul>
                     <li>
