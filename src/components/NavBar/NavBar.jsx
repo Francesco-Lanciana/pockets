@@ -9,7 +9,7 @@ import { Link } from "gatsby";
 import { CSSTransition } from "react-transition-group";
 
 import ShoppingCart from "@components/ShoppingCart/ShoppingCart";
-import { useMedia } from "@hooks/window-hooks";
+import { useMedia, useScrollBasedPin } from "@hooks/window-hooks";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
 
 import logo from "@images/logo-semi.png";
@@ -18,10 +18,12 @@ import MenuIcon from "@images/bars-regular.svg";
 
 import "./NavBar.scss";
 
-const NavBar = ({ onToggleMenu }) => {
+const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
     const [showShoppingCart, setShowShoppingCart] = useState(false);
     const { itemsInCart } = useContext(ShoppingCartContext);
     const showMenu = useMedia("(max-width: 800px)", true, false);
+    const showCartText = useMedia("(max-width: 330px)", false, true);
+    const isPinned = useScrollBasedPin(true, { pinThreshold: 50 });
     const showNavLinks = !showMenu;
 
     const numItems = itemsInCart.reduce((total, { quantity }) => total + quantity, 0);
@@ -41,7 +43,7 @@ const NavBar = ({ onToggleMenu }) => {
     }, []);
 
     return (
-        <header className="navbar">
+        <header className="navbar" data-show={alwaysPinned || isPinned}>
             <div className="navbar-content" data-menu-visible={showMenu}>
                 {showMenu && (
                     <div className="menu-icon-container">
@@ -74,7 +76,7 @@ const NavBar = ({ onToggleMenu }) => {
                     <div className="shopping-cart-icon-container">
                         <ShoppingCartImage />
                     </div>
-                    <span className="shopping-cart-text-container">Cart</span>
+                    {showCartText && <span className="shopping-cart-text-container">Cart</span>}
                     <span className="shopping-cart-badge">{numItems}</span>
                 </button>
 

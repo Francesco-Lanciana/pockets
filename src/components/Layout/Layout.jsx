@@ -16,7 +16,7 @@ import Footer from "@components/Footer/Footer";
 import "@styles/main.scss";
 import "./Layout.scss";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, offscreenNavBar = false }) => {
     const [isMenuHidden, setIsMenuHidden] = useState(true);
     const [selectedItemId, setSelectedItemId] = useState();
 
@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
 
     return (
         <div className="layout">
-            <NavBar onToggleMenu={handleToggleMenu} />
+            <NavBar onToggleMenu={handleToggleMenu} alwaysPinned={!offscreenNavBar}/>
             <SideNavBar
                 onSelectItem={handleSelectItem}
                 selectedItemId={selectedItemId}
