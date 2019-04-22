@@ -1,24 +1,35 @@
 import React from "react";
 import { Link, graphql } from "gatsby";
 
+import PostPreview from "@components/PostPreview/PostPreview";
 import Layout from "@components/Layout/Layout";
 
 import "./blog.scss";
 
 const BlogPage = ({ data }) => (
-    <div className="blog-page">
-        <h1>Our blog</h1>
+    <Layout>
+        <div className="blog-page">
+            <h1 className="blog-title">Our blog</h1>
 
-        <main className="blog-cards">
-            {data.allContentfulBlogPost.edges.map(({ node: blogPost }) => (
-                <div className="blog-card" key={blogPost.id}>
-                    <Link to={`/blog/${blogPost.slug}`} className="blog-post-link">
-                        <h2>{blogPost.title}</h2>
-                    </Link>
-                </div>
-            ))}
-        </main>
-    </div>
+            <main className="blog-cards">
+                {data.allContentfulBlogPost.edges.map(({ node: blogPost }) => (
+                    <article className="post-preview-container" key={blogPost.id}>
+                        <Link to={`/blog/${blogPost.slug}`} className="blog-post-link">
+                            <PostPreview
+                                title={blogPost.title}
+                                summary={blogPost.summary.summary}
+                                tags={blogPost.tags}
+                                author={blogPost.authorGivenName + " " + blogPost.authorFamilyName}
+                                datePublished={blogPost.createdAt}
+                                dateUpdated={blogPost.updatedAt}
+                                image={blogPost.heroImage.fixed.src}
+                            />
+                        </Link>
+                    </article>
+                ))}
+            </main>
+        </div>
+    </Layout>
 );
 
 export const query = graphql`
@@ -27,8 +38,8 @@ export const query = graphql`
             edges {
                 node {
                     title
-                    description {
-                        description
+                    summary {
+                        summary
                     }
                     slug
                     tags
@@ -36,6 +47,11 @@ export const query = graphql`
                     authorFamilyName
                     createdAt
                     updatedAt
+                    heroImage {
+                        fixed(height: 200) {
+                            src
+                        }
+                    }
                 }
             }
         }
