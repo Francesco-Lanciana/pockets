@@ -12,7 +12,7 @@ import "./BlogPost.scss";
 const BlogPostPage = ({ data }) => {
     const {
         title,
-        description,
+        summary,
         tags,
         authorGivenName,
         authorFamilyName,
@@ -22,17 +22,18 @@ const BlogPostPage = ({ data }) => {
     } = data.contentfulBlogPost;
 
     return (
-        <Layout>
+        <Layout offscreenNavBar={true}>
             <div className="blog-post-page">
                 <SEO
                     type="blog"
                     metadata={{
                         title,
-                        description: description.description,
+                        description: summary.summary,
                         datePublished: createdAt,
                         dateModified: updatedAt,
                         authorGivenName,
                         authorFamilyName,
+                        
                     }}
                 />
                 hey
@@ -48,8 +49,8 @@ export const query = graphql`
         contentfulBlogPost(id: { eq: $id }) {
             id
             title
-            description {
-                description
+            summary {
+                summary
             }
             tags
             authorGivenName
@@ -58,6 +59,11 @@ export const query = graphql`
             updatedAt
             content {
                 content
+            }
+            heroImage {
+                fixed {
+                    src
+                }
             }
         }
     }
