@@ -40,6 +40,7 @@ module.exports = {
                 spaceId: `6bd6e1p1y8nx`,
                 accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
                 host: process.env.CONTENTFUL_ACCESS_URL,
+                downloadLocal: true,
             },
         },
         {
