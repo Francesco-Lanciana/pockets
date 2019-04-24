@@ -7,12 +7,12 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import Helmet from "react-helmet";
+import {Helmet} from "react-helmet";
 
 import { DEFAULT_SEO } from '../seo-config';
 import { generateJSONLD } from '@utils/seo';
 
-const SEO = ({ type, metadata={}}) => {
+const SEO = React.memo(({ type, metadata={}}) => {
     const schemaOrgJSONLD = generateJSONLD(type)(metadata);
 
     return (
@@ -57,7 +57,7 @@ const SEO = ({ type, metadata={}}) => {
             <meta key="og:locale" property="og:locale" content={DEFAULT_SEO.openGraph.locale} />
         </Helmet>
     );
-};
+});
 
 SEO.propTypes = {
     type: PropTypes.string.isRequired,
