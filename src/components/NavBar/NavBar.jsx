@@ -30,7 +30,10 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
 
     useEffect(() => {
         function handleClick(event) {
-            if (!event.target.closest(".shopping-cart-container,.shopping-cart-btn")) {
+            /* Keep the target on shopping-cart instead of shopping-cart-container to allow
+            users to click on the safety net just around the shopping cart in order to close
+            the modal. This prevents links being accidently clicked while closing the modal */
+            if (!event.target.closest(".shopping-cart,.shopping-cart-btn")) {
                 setShowShoppingCart(false);
             }
         }
@@ -43,7 +46,7 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
     }, []);
 
     return (
-        <header className="navbar" data-show={alwaysPinned || isPinned}>
+        <header className="navbar" data-show={alwaysPinned || isPinned} >
             <div className="navbar-content" data-menu-visible={showMenu}>
                 {showMenu && (
                     <div className="menu-icon-container">
