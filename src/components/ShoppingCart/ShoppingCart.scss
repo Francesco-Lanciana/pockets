@@ -1,19 +1,43 @@
-$main-color: #6394F8;
-$light-text: #ABB0BE;
+$main-color: #6394f8;
+$light-text: #abb0be;
 
+$shopping-cart-padding: 15px;
+$shopping-cart-items-padding: 20px;
+$shopping-cart-header-padding: 15px;
+$shopping-cart-btn-margin: 20px;
+$shopping-cart-item-height: 60px;
+$shopping-cart-btn-height: 54px;
 
 .shopping-cart {
     margin: 20px 0;
     background: rgba(255, 255, 255, 0.98);
-    width: 320px;
     position: relative;
     border-radius: 3px;
-    padding: 20px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    max-height: calc(100vh - 88px);
+    transform: translate3d(0, 0, 0);
+    z-index: 4;
+
+    /* A height needs to be assigned otherwise the inner scroll container height won't take effect and
+    the content will simply spill out of the container. Unfortunately this isn't as easy as it would be
+    with an element that is just the full vieport height or an always fixed size. Since the size can change
+    based off the number of items this calculation is needed. Also since we cap the modal height after
+    4.5 items the css variable num-items is also capped at this. I know this is a shitty hack but it'll 
+    have to do until css gets a max function */
+    height: calc(#{$shopping-cart-padding + $shopping-cart-items-padding + 2 * $shopping-cart-header-padding + $shopping-cart-btn-margin + $shopping-cart-btn-height} + 1.375rem + var(--num-items) * #{$shopping-cart-item-height} + (var(--num-items) - 1) * 15px + 10px);
+
+    .shopping-cart-inner-scroll {
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
+        padding: $shopping-cart-padding;
+    }
 
     .shopping-cart-header {
         border-bottom: 1px solid #e8e8e8;
-        padding-bottom: 15px;
+        padding-bottom: $shopping-cart-header-padding;
+        font-size: 1rem;
+        line-height: 1.375rem;
     }
 
     .shopping-cart-total {
@@ -21,13 +45,13 @@ $light-text: #ABB0BE;
     }
 
     .shopping-cart-items {
-        padding-top: 20px;
-        max-height: 270px;
-        overflow: scroll;
+        padding-top: $shopping-cart-items-padding;
+        max-height: 338px;
+        overflow-y: scroll;
         position: relative;
 
-        li {
-            margin-bottom: 18px;
+        li + li {
+            margin-top: 18px;
         }
 
         img {
@@ -39,6 +63,9 @@ $light-text: #ABB0BE;
             display: block;
             padding-top: 5px;
             font-size: 16px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
         .item-price {
@@ -60,8 +87,8 @@ $light-text: #ABB0BE;
     .shopping-cart-item-details {
         display: flex;
         flex-direction: column;
-        flex: 1 1 auto;
         padding-right: 12px;
+        width: calc(100% - 70px);
     }
 
     .shopping-cart-item-meta-details {
@@ -72,34 +99,44 @@ $light-text: #ABB0BE;
 
     .clothing-image-container {
         overflow: hidden;
-        max-height: 60px;
-        flex-basis: 60px;
+        max-height: $shopping-cart-item-height;
         margin-right: 10px;
+        flex: 0 0 $shopping-cart-item-height;
     }
 
-    &:after {
+    &:after,
+    &:before {
         bottom: 100%;
-        left: 89%;
         border: solid transparent;
         content: " ";
         height: 0;
         width: 0;
         position: absolute;
         pointer-events: none;
-        border-bottom-color: white;
-        border-width: 8px;
-        margin-left: -8px;
+        bottom: 100%;
+        left: 89%;
+    }
+
+    &:after {
+        border-bottom-color: #ffffff;
+        border-width: 10px;
+        margin-left: -10px;
+    }
+
+    &:before {
+        border-bottom-color: #e8e8e8;
+        border-width: 11px;
+        margin-left: -11px;
     }
 
     .empty-cart-message {
         text-align: center;
-        padding: 10px;
         color: #383838;
-        line-height: 1.4;
+        line-height: 60px;
     }
 
     .checkout-btn {
-        background: #6394F8;
+        background: #6394f8;
         color: white;
         text-align: center;
         padding: 12px;
@@ -107,14 +144,15 @@ $light-text: #ABB0BE;
         display: block;
         border-radius: 3px;
         font-size: 16px;
-        margin-top: 20px;
+        margin-top: $shopping-cart-btn-margin;
         width: 100%;
         border: none;
+        height: $shopping-cart-btn-height;
     }
 
     .checkout-btn:disabled {
         background: inherit;
-        border: 1px solid rgba(140,140,140,0.5);
-        color: rgba(140,140,140,0.5);
+        border: 1px solid rgba(140, 140, 140, 0.5);
+        color: rgba(140, 140, 140, 0.5);
     }
 }
