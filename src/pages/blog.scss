@@ -1,10 +1,14 @@
 .blog-page {
-    padding: 20px;
+    padding: 4%;
 
     .blog-title {
         max-width: 1000px;
         margin: 0 auto;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
+        background: linear-gradient(to right, #FFB7B7, #FF7192);
+        background-clip: text;
+        color: transparent;
+
     }
 
     .blog-cards {
