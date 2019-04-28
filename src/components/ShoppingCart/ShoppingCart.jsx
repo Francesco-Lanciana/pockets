@@ -49,19 +49,19 @@ const ShoppingCart = ({ items }) => {
     is shown and the max of 4.5 is to cope with the list only growing to accomodate 4.5 items before
     requiring that you scroll */
     return (
-        <div className="shopping-cart" style={{ "--num-items": Math.min((items.length || 1), 4.5) }}>
-            <div className="shopping-cart-inner-scroll">
-                <div className="shopping-cart-header">
-                    <div className="shopping-cart-icon-container">
-                        <ShoppingCartImage />
-                    </div>
-                    <span className="shopping-cart-badge">{numItems}</span>
-                    <div className="shopping-cart-total">
-                        <span className="lighter-text">Total: </span>
-                        <span className="main-color-text">{qualifiedTotalPrice}</span>
-                    </div>
+        <div className="shopping-cart">
+            <div className="shopping-cart-header">
+                <div className="shopping-cart-icon-container">
+                    <ShoppingCartImage />
                 </div>
+                <span className="shopping-cart-badge">{numItems}</span>
+                <div className="shopping-cart-total">
+                    <span className="lighter-text">Total: </span>
+                    <span className="main-color-text">{qualifiedTotalPrice}</span>
+                </div>
+            </div>
 
+            {!!items.length && (
                 <ul className="shopping-cart-items">
                     {items.map((item) => (
                         <li className="shopping-cart-item">
@@ -85,13 +85,13 @@ const ShoppingCart = ({ items }) => {
                         </li>
                     ))}
                 </ul>
+            )}
 
-                {cartIsEmpty && <div className="empty-cart-message">You cart is currently empty</div>}
+            {cartIsEmpty && <div className="empty-cart-message">You cart is currently empty</div>}
 
-                <button className="checkout-btn" onClick={redirectToCheckout} disabled={true}>
-                    Checkout
-                </button>
-            </div>
+            <button className="checkout-btn" onClick={redirectToCheckout} disabled={true}>
+                Checkout
+            </button>
         </div>
     );
 };
