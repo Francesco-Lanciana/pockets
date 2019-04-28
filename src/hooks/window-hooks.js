@@ -6,7 +6,7 @@ export function useMedia(queries, values, defaultValue) {
     const queriesArray = isSingleQuery ? [queries] : queries;
 
     // Array containing a media query list for each query
-    const mediaQueryLists = queriesArray.map((q) => typeof window !== 'undefined' ? window.matchMedia(q) : { matches: true });
+    const mediaQueryLists = queriesArray.map((q) => typeof window !== 'undefined' ? window.matchMedia(q) : { matches: defaultValue });
 
     // Function that gets value based on matching media query
     const getValue = () => {        
