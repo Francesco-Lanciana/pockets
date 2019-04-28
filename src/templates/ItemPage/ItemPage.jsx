@@ -15,7 +15,7 @@ const ItemPage = ({ data }) => {
     const { onItemSelection } = useContext(ShoppingCartContext);
     const { price, currency, product, id } = data.stripeSku;
     const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = `${currencySymbol}${(price/100).toFixed(2)}`;
+    const qualifiedPrice = `${currencySymbol}${(price / 100).toFixed(2)}`;
 
     return (
         <Layout>
@@ -37,30 +37,34 @@ const ItemPage = ({ data }) => {
                     <BackIcon />
                 </Link>
                 <div className="clothing-details">
-                    <div className="clothing-classifications">
-                        <div className="clothing-pockets-classification" />
+                    <div className="clothing-quick-details">
+                        <div className="sticky-container">
+                            <div className="clothing-name">{product.name}</div>
+                            <div className="clothing-price">{qualifiedPrice}</div>
+                            <div className="clothing-description">{product.description}</div>
+                            <div className="clothing-link-container">
+                                <button
+                                    className="clothing-link"
+                                    onClick={() => {
+                                        onItemSelection("add", {
+                                            id,
+                                            name: product.name,
+                                            image: product.localFiles[0],
+                                            price,
+                                            currency,
+                                        });
+                                    }}
+                                >
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
-                    <div className="clothing-quick-details">
-                        <div className="clothing-name">{product.name}</div>
-                        <div className="clothing-price">{qualifiedPrice}</div>
-                        <div className="clothing-description">{product.description}</div>
-                        <div className="clothing-link-container">
-                            <button
-                                className="clothing-link"
-                                onClick={() => {
-                                    onItemSelection("add", {
-                                        id,
-                                        name: product.name,
-                                        image: product.localFiles[0],
-                                        price,
-                                        currency,
-                                    });
-                                }}
-                            >
-                                Add to cart
-                            </button>
-                        </div>
+                    <div className="clothing-classifications">
+                        <h4>Materials</h4>
+                        <div></div>
+                        <div className="clothing-pockets-classification" />
                     </div>
                 </div>
             </div>
