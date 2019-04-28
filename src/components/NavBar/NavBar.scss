@@ -1,9 +1,8 @@
 @import "~@styles/_variables.scss";
 
-$nav-height: 55px;
+$nav-height: 60px;
 
 .navbar {
-    box-shadow: 0px 4px 8px -3px rgba(17, 17, 17, 0.06);
     background: white;
     position: sticky;
     top: 0;
@@ -11,6 +10,18 @@ $nav-height: 55px;
     left: 0;
     transition: all 0.3s;
     z-index: 2;
+
+    &::before {
+        content:'';
+        position:absolute;
+        width:100%;
+        height:100%;
+        left:0;
+        top:0;
+        box-shadow: 0px 4px 8px -3px rgba(17, 17, 17, 0.06);
+        z-index: 5;
+        pointer-events: none;
+    }
 
     &[data-show="false"] {
         transform: translateY(-100%);
@@ -26,7 +37,6 @@ $nav-height: 55px;
         margin-left: auto;
         margin-right: auto;
         padding: 15px 40px;
-        height: 60px;
         position: relative;
     }
 
@@ -165,11 +175,12 @@ $nav-height: 55px;
         bottom: 0px;
         width: 80%;
         max-width: 320px;
-        transform: translateY(100%);
+        max-height: 350px;
+        top: $nav-height + 20px;
 
         /* Capture clicks around the shopping cart so that you don't click through to
     another page when you are really only trying to close the shopping cart */
-        &::after {
+        &[data-full-screen="false"]::after {
             content: "";
             position: absolute;
             left: -50px;
@@ -183,6 +194,19 @@ $nav-height: 55px;
             containing element of the sticky element than for some reason that overflow amount
             is added to the position of the content containing box (even if you overflow in x
             and were using top). */
+        }
+    }
+
+    .shopping-cart-container[data-full-screen="true"] {
+        width: 100%;
+        max-width: none;
+        right: 0;
+        height: calc(100vh - #{$nav-height});
+        max-height: none;
+        top: $nav-height;
+
+        > .shopping-cart {
+            height: 100%;
         }
     }
 

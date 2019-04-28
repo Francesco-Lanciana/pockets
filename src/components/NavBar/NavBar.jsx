@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect, useContext } from "react";
-import { Link } from "gatsby";
+import { Link, navigate } from "gatsby";
 import { CSSTransition } from "react-transition-group";
 
 import ShoppingCart from "@components/ShoppingCart/ShoppingCart";
@@ -23,6 +23,7 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
     const { itemsInCart } = useContext(ShoppingCartContext);
     const showMenu = useMedia("(max-width: 800px)", true, false);
     const showCartText = useMedia("(max-width: 330px)", false, true);
+    const useFullScreenCart = useMedia("(max-height: 580px)", true, false);
     const isPinned = useScrollBasedPin(true, { pinThreshold: 50 });
     const showNavLinks = !showMenu;
 
@@ -44,6 +45,11 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
             document.removeEventListener("click", handleClick);
         };
     }, []);
+    
+    useEffect(() => {
+        if (showShoppingCart && useFullScreenCart) document.body.style.overflow = "hidden";
+        else document.body.style.overflow = "";
+    }, [showShoppingCart, useFullScreenCart])
 
     return (
         <header className="navbar" data-show={alwaysPinned || isPinned} >
@@ -60,13 +66,13 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
                     <nav className="site-navigation-container">
                         <ul className="site-navigation-links">
                             <li className="site-navigation-link">
-                                <Link to="?sort=pants">Pants</Link>
+                                <Link to="/?sort=pants">Pants</Link>
                             </li>
                             <li className="site-navigation-link">
-                                <Link to="?sort=shorts">Shorts</Link>
+                                <Link to="/?sort=shorts">Shorts</Link>
                             </li>
                             <li className="site-navigation-link">
-                                <Link to="?sort=skirts">Skirts</Link>
+                                <Link to="/?sort=skirts">Skirts</Link>
                             </li>
                         </ul>
                     </nav>
@@ -79,12 +85,12 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
                     <div className="shopping-cart-icon-container">
                         <ShoppingCartImage />
                     </div>
-                    {showCartText && <span className="shopping-cart-text-container">Cart</span>}
+                    {showCartText && <div className="shopping-cart-text-container">Cart</div>}
                     <span className="shopping-cart-badge">{numItems}</span>
                 </button>
 
                 <CSSTransition classNames="fade" timeout={200} in={showShoppingCart} unmountOnExit>
-                    <div className="shopping-cart-container">
+                    <div className="shopping-cart-container" data-full-screen={useFullScreenCart}>
                         <ShoppingCart items={itemsInCart} />
                     </div>
                 </CSSTransition>
