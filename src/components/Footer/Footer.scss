@@ -7,7 +7,7 @@ $small-link-height: 25px;
 .footer {
     background: #222222;
     color: white;
-    padding-bottom: 20px;
+    padding: 20px 0;
     overflow: hidden; // Super edge case at super small screen sizes
 
     .content-container {
@@ -15,7 +15,7 @@ $small-link-height: 25px;
         display: grid;
         grid-template-columns: 33% 33% 33%;
         grid-template-rows: 1fr auto;
-        grid-gap: 0 20px;
+        grid-gap: 10px 20px;
         margin: 0 auto;
         padding: 0px 40px;
 
@@ -83,8 +83,8 @@ $small-link-height: 25px;
     }
 
     .follow-links {
-        & li {
-            @media screen and (max-width: $med-breakpoint) {
+        @media screen and (max-width: $med-breakpoint) {
+            li {
                 width: 50%;
             }
         }
@@ -92,6 +92,9 @@ $small-link-height: 25px;
         @media screen and (max-width: $small-breakpoint) {
             grid-column: 1 / -1;
 
+            li {
+                width: 33%;
+            }
         }
     }
 
