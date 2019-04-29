@@ -1,4 +1,12 @@
 @import "@styles/_mixins.scss";
+$card-min-width: 330px;
+$card-gap: 20px;
+$card-content-padding-lg: 40px;
+$card-content-padding-sm: 20px;
+$screen-bp-large: $card-min-width * 3 + $card-gap * 2 + $card-content-padding-lg * 2 + 20px;
+$screen-bp-med: $card-min-width * 2 + $card-gap * 1 + $card-content-padding-lg * 2 + 20px;
+$screen-bp-sm: 570px;
+$screen-bp-mobile: $card-min-width + 20px;
 
 .list-page {
     .navbar {
@@ -13,32 +21,28 @@
     .clothing-cards {
         display: grid;
         grid-gap: 20px;
-        grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(#{$card-min-width}, 1fr));
         max-width: 2400px;
         margin: 0 auto;
         padding: 0 7% 30px;
         justify-items: stretch;
-        padding: 20px;
+        padding: 40px;
 
-        @media screen and (max-width: 1020px) {
+        @media screen and (max-width: #{$screen-bp-large}) {
             grid-template-columns: 1fr 1fr 1fr;
         }
 
-        @media screen and (max-width: 700px) {
+        @media screen and (max-width: #{$screen-bp-med}) {
             grid-template-columns: 1fr 1fr;
         }
 
-        @media screen and (max-width: 571px) {
+        @media screen and (max-width: #{$screen-bp-sm}) {
             padding: 20px 10px;
             grid-gap: 10px;
         }
 
-        @media screen and (max-width: 300px) {
+        @media screen and (max-width: #{$screen-bp-mobile}) {
             grid-template-columns: 1fr;
-        }
-
-        @media screen and (min-width: 571px) {
-            padding: 40px;
         }
     }
 
@@ -50,6 +54,7 @@
 
     .clothing-image-container {
         background: #F8F4EE;
+        padding-bottom: 10px;
     }
 
     .clothing-image {
@@ -57,34 +62,38 @@
     }
 
     .clothing-details {
-        padding: 10px 15px 20px 20px;
+        padding: 10px 15px 20px 5px;
         display: flex;
         flex-direction: column;
-        text-align: center;
         padding-bottom: 10px;
         height: 90px;
     }
 
     .clothing-name {
-        font-size: 14px;
-        line-height: 18px;
+        font-size: 1rem;
+        line-height: 1.25rem;
         display: inline-block;
         color: #393c45;
-        text-transform: uppercase;
         margin: 0;
         flex: 0 1 auto;
-        margin-bottom: 5px;
+        letter-spacing: 0.5px;
+        margin-bottom: 2px;
+
+        @media screen and (max-width: #{$screen-bp-large}) {
+            font-size: 0.875rem;
+            line-height: 1rem;
+        }
     }
 
     .clothing-price {
-        font-size: 14px;
-        line-height: 20px;
         margin: 0;
-        text-align: center;
         display: inline-block;
         vertical-align: top;
-        padding-left: 10px;
         min-width: 70px;
+        font-weight: 700;
+        font-size: 0.875rem;
+        letter-spacing: 0.04em;
+        color: #1c1c1c;
     }
 
     .item-link {
