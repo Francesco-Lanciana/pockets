@@ -36,7 +36,7 @@ export function useMedia(queries, values, defaultValue) {
         [] // Empty array ensures effect is only run on mount and unmount
     );
 
-    return value;
+    return [value, setValue];
 }
 
 /**

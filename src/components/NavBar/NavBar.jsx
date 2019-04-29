@@ -21,9 +21,9 @@ import "./NavBar.scss";
 const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
     const [showShoppingCart, setShowShoppingCart] = useState(false);
     const { itemsInCart } = useContext(ShoppingCartContext);
-    const showMenu = useMedia("(max-width: 800px)", true, false);
-    const showCartText = useMedia("(max-width: 330px)", false, true);
-    const useFullScreenCart = useMedia("(max-height: 580px)", true, false);
+    const [showMenu, setShowMenu] = useMedia("(max-width: 800px)", true, false);
+    const [showCartText] = useMedia("(max-width: 330px)", false, true);
+    const [useFullScreenCart] = useMedia("(max-height: 580px)", true, false);
     const isPinned = useScrollBasedPin(true, { pinThreshold: 50 });
     const showNavLinks = !showMenu;
 
@@ -40,6 +40,8 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
         }
 
         document.addEventListener("click", handleClick);
+
+        if (window.innerWidth <= 800) setShowMenu(true);
 
         return function cleanup() {
             document.removeEventListener("click", handleClick);
