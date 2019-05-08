@@ -50,6 +50,7 @@ $screen-bp-mobile: $card-min-width + 20px;
         overflow: hidden;
         cursor: pointer;
         display: flex;
+        border: 1px solid #eeeeee;
     }
 
     .clothing-image-container {
@@ -57,8 +58,13 @@ $screen-bp-mobile: $card-min-width + 20px;
         padding-bottom: 10px;
     }
 
+    // linear-gradient(to bottom, #E4E4E2, #F5F4F2);
+    //radial-gradient(#FADFCD,#F3D4C3);
+
     .clothing-image {
         background: inherit;
+
+        // background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0) 60%, #fff 60.1%, #fff 65%, rgba(0,0,0,0) 65.1%);
     }
 
     .clothing-details {
@@ -66,7 +72,7 @@ $screen-bp-mobile: $card-min-width + 20px;
         display: flex;
         flex-direction: column;
         padding-bottom: 10px;
-        height: 90px;
+        height: 80px;
     }
 
     .clothing-name {

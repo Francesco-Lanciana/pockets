@@ -11,7 +11,7 @@ import "./index.scss";
 
 function getQualifiedPrice(currency, price) {
     const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = `${currency.toUpperCase()} ${currencySymbol}${(price/100).toFixed(2)}`;
+    const qualifiedPrice = `${currency.toUpperCase()} ${currencySymbol}${(price / 100).toFixed(2)}`;
 
     return qualifiedPrice;
 }
@@ -21,30 +21,40 @@ const IndexPage = ({ data }) => {
         <Layout>
             <div className="list-page">
                 <main className="clothing-cards">
-                    {data.allStripeSku.edges.map(({ node: sku }) => (
-                        <div className="clothing-card" key={sku.product.id}>
-                            <Link to={`/clothing/${sku.product.id}`} className="item-link">
-                                <div
-                                    className="clothing-image-container"
-                                    data-cropped-bottom={sku.product.metadata.cropped === "bottom"}
-                                    data-cropped-top={sku.product.metadata.cropped === "top"}
-                                >
-                                    <Img
-                                        sizes={{ ...sku.product.localFiles[0].childImageSharp.fluid, aspectRatio: 4 / 5 }}
-                                        fluid={sku.product.localFiles[0].childImageSharp.fluid}
-                                        imgStyle={{ objectFit: "contain" }}
-                                        className="clothing-image"
-                                    />
-                                </div>
-                                <div className="clothing-details">
-                                    <div className="clothing-name">{sku.product.name}</div>
-                                    <div className="clothing-price">
-                                        {getQualifiedPrice(sku.currency, sku.price)}
+                    {data.allStripeProduct.edges.map(({ node: product }) => {
+                        const relatedSkus = data.allStripeSku.edges.filter(
+                            ({ node }) => node.product.id === product.id
+                        );
+                        const price = Math.min(...relatedSkus.map(({ node }) => node.price));
+                        const { currency } = relatedSkus[0].node;
+
+                        return (
+                            <div className="clothing-card" key={product.id}>
+                                <Link to={`/clothing/${product.id}`} className="item-link">
+                                    <div
+                                        className="clothing-image-container"
+                                        data-cropped-bottom={product.metadata.croppedBottom}
+                                    >
+                                        <Img
+                                            sizes={{
+                                                ...product.localFiles[0].childImageSharp.fluid,
+                                                aspectRatio: 4 / 5,
+                                            }}
+                                            fluid={product.localFiles[0].childImageSharp.fluid}
+                                            imgStyle={{ objectFit: "contain" }}
+                                            className="clothing-image"
+                                        />
                                     </div>
-                                </div>
-                            </Link>
-                        </div>
-                    ))}
+                                    <div className="clothing-details">
+                                        <div className="clothing-name">{product.name}</div>
+                                        <div className="clothing-price">
+                                            {getQualifiedPrice(currency, price)}
+                                        </div>
+                                    </div>
+                                </Link>
+                            </div>
+                        );
+                    })}
                 </main>
             </div>
         </Layout>
@@ -62,18 +72,25 @@ export const query = graphql`
                         type
                     }
                     product {
-                        name
-                        type
                         id
-                        description
-                        metadata {
-                            croppedBottom
-                        }
-                        localFiles {
-                            childImageSharp {
-                                fluid(maxWidth: 320, maxHeight: 480) {
-                                    ...GatsbyImageSharpFluid_tracedSVG
-                                }
+                    }
+                }
+            }
+        }
+        allStripeProduct {
+            edges {
+                node {
+                    name
+                    type
+                    id
+                    description
+                    metadata {
+                        croppedBottom
+                    }
+                    localFiles {
+                        childImageSharp {
+                            fluid(maxWidth: 320, maxHeight: 480) {
+                                ...GatsbyImageSharpFluid_tracedSVG
                             }
                         }
                     }
