@@ -7,6 +7,7 @@ import Img from "gatsby-image";
 
 import { getCurrencySymbol } from "@utils/currencyHelpers";
 import ShoppingCartImage from "@images/shopping-cart-solid.svg";
+import StripeApi from "@api/stripeApi";
 
 import "./ShoppingCart.scss";
 
@@ -33,11 +34,21 @@ const ShoppingCart = ({ items }) => {
     async function redirectToCheckout(event) {
         event.preventDefault();
         const itemsToCharge = items.map(({ id: sku, quantity }) => ({ sku, quantity }));
+        const skuIds = itemsToCharge.map(({ sku }) => sku);
+        const quantities = itemsToCharge.reduce((quantities, item) => {
+            return { ...quantities, [item.sku]: item.quantity }
+        }, {});
+        const [err, { session }] = await StripeApi.createSession(skuIds, quantities);
+
+        if (err) {
+            console.log("Error: ", err);
+        }
 
         const { error } = await stripe.redirectToCheckout({
-            items: itemsToCharge,
-            successUrl: `http://localhost:8000/page-2/`,
-            cancelUrl: `http://localhost:8000/`,
+            //items: itemsToCharge,
+            sessionId: session.id,
+            // successUrl: `http://localhost:8000/page-2/`,
+            // cancelUrl: `http://localhost:8000/`,
         });
 
         if (error) {
@@ -89,7 +100,7 @@ const ShoppingCart = ({ items }) => {
 
             {cartIsEmpty && <div className="empty-cart-message">You cart is currently empty</div>}
 
-            <button className="checkout-btn" onClick={redirectToCheckout} disabled={true}>
+            <button className="checkout-btn" onClick={redirectToCheckout} disabled={cartIsEmpty}>
                 Checkout
             </button>
         </div>
