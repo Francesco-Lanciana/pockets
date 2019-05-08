@@ -1,8 +1,10 @@
 const path = require("path");
 
-require("dotenv").config({
-    path: `.env.${process.env.NODE_ENV}`,
-});
+// require("dotenv").config({
+//     path: `.env.${process.env.NODE_ENV}`,
+// });
+
+require("dotenv").config();
 
 module.exports = {
     siteMetadata: {
@@ -53,6 +55,7 @@ module.exports = {
                     "@images": path.resolve(__dirname, "src/images"),
                     "@hooks": path.resolve(__dirname, "src/hooks"),
                     "@context": path.resolve(__dirname, "src/context"),
+                    "@api": path.resolve(__dirname, "src/api"),
                 },
                 extensions: [],
             },
@@ -61,10 +64,9 @@ module.exports = {
         {
             resolve: "gatsby-source-stripe",
             options: {
-                objects: ["Sku"],
+                objects: ["Sku", "Product"],
                 secretKey: process.env.STRIPE_SECRET_KEY,
-                downloadFiles: true,
-                auth: false,
+                downloadFiles: true
             },
         },
         {

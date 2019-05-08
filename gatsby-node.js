@@ -7,12 +7,10 @@ exports.createPages = ({ graphql, actions }) => {
     
     return graphql(`
         {
-            allStripeSku {
+            allStripeProduct {
                 edges {
                     node {
-                        product {
-                            id
-                        }
+                        id
                     }
                 }
             }
@@ -31,8 +29,8 @@ exports.createPages = ({ graphql, actions }) => {
         }
 
         // Create clothing item pages.
-        result.data.allStripeSku.edges.forEach(({ node: item }) => {
-            const { id } = item.product;
+        result.data.allStripeProduct.edges.forEach(({ node: product }) => {
+            const { id } = product;
 
             createPage({
                 path: `clothing/${id}`,
