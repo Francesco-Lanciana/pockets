@@ -53,7 +53,9 @@ const Layout = ({ children, offscreenNavBar = false }) => {
             <CSSTransition classNames="fade" timeout={200} in={!isMenuHidden} unmountOnExit>
                 <div className="mobile-overlay" onClick={handleToggleMenu} />
             </CSSTransition>
-            {children}
+            <div className="contents">
+                {children}
+            </div>
             <Footer />
         </div>
     );
