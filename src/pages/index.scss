@@ -37,8 +37,8 @@ $screen-bp-mobile: $card-min-width + 20px;
         }
 
         @media screen and (max-width: #{$screen-bp-sm}) {
-            padding: 20px 10px;
-            grid-gap: 10px;
+            padding: 20px 0px;
+            grid-gap: 15px;
         }
 
         @media screen and (max-width: #{$screen-bp-mobile}) {
@@ -51,10 +51,14 @@ $screen-bp-mobile: $card-min-width + 20px;
         cursor: pointer;
         display: flex;
         border: 1px solid #eeeeee;
+
+        @media screen and (max-width: #{$screen-bp-sm}) {
+            border: none;
+        }
     }
 
     .clothing-image-container {
-        background: #F8F4EE;
+        background: radial-gradient(#F8F4EE,#e6d7c1);
         padding-bottom: 10px;
     }
 
