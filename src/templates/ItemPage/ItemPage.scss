@@ -15,26 +15,29 @@
 
     .clothing-details {
         display: flex;
-        padding: 30px 40px;
+        padding: 45px 40px;
         max-width: 1200px;
         margin: 0 auto;
 
         @media screen and (max-width: 1000px) {
             flex-direction: column;
-        }
+            padding: 45px 30px;
 
-        > :not(:first-child) {
-            margin-top: 40px;
+            > :not(:first-child) {
+                margin-top: 40px;
+            }
         }
     }
 
     .clothing-classifications {
         order: 1;
         width: 50%;
+        padding-right: 40px;
 
         @media screen and (max-width: 1000px) {
             order: 2;
             width: 100%;
+            padding-right: 0;
         }
     }
 
@@ -58,17 +61,17 @@
     }
 
     .clothing-sizing-container {
-        margin-top: 20px;
+        margin-top: 30px;
         display: flex;
     }
 
-    .clothing-link-container {
+    .add-cart-btn-container {
         margin-top: 20px;
         display: flex;
         justify-content: center;
     }
 
-    .clothing-link {
+    .add-cart-btn {
         background: #6394F8;
         color: white;
         border: none;
@@ -79,6 +82,7 @@
         text-decoration: none;
         text-align: center;
         text-transform: uppercase;
+        cursor: pointer;
     }
 
     .clothing-price {
@@ -92,10 +96,17 @@
         top: 80px;
     }
 
+    .menu-dropdown-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     .menu-dropdown-icon {
         font-size: 1.5rem;
         color: hsla(220, 91%, 56%, 1);
         padding: 0 5px;
+        line-height: 21px;
     }
 
     [data-reach-menu-button] {
@@ -108,6 +119,7 @@
         display: flex;
         justify-content: space-between;
         max-width: 320px;
+        cursor: pointer;
 
         &:focus, &:hover {
             outline: 1px solid hsla(220, 91%, 82%, 1);
@@ -125,6 +137,7 @@
         justify-content: space-between;
         max-width: 180px;
         margin-left: 20px;
+        cursor: pointer;
 
         &:focus, &:hover {
             outline: 1px solid hsla(220, 91%, 82%, 1);

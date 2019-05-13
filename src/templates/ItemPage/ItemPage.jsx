@@ -1,10 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import { graphql, Link } from "gatsby";
 import { Menu, MenuList, MenuButton, MenuItem } from "@reach/menu-button";
 import { Dialog } from "@reach/dialog";
 import VisuallyHidden from "@reach/visually-hidden";
 
 import FadeCarousel from "@components/FadeCarousel/FadeCarousel";
+import ItemDetailsSection from "@components/ItemDetailsSection/ItemDetailsSection";
 import Layout from "@components/Layout/Layout";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
 import SEO from "@components/seo";
@@ -20,8 +21,11 @@ const ItemPage = ({ data }) => {
     const skus = data.allStripeSku.edges.map(({ node }) => node);
 
     const { onItemSelection } = useContext(ShoppingCartContext);
-    const [selectedSku, setSelectedSku] = useState(skus[0].id);
+    const [selectedSku, setSelectedSku] = useState(null);
     const [showDialog, setShowDialog] = useState(false);
+    const [addToCardPending, setAddToCardPending] = useState(false);
+    const menuButtonEl = useRef(null);
+    const addToCartBtnEl = useRef(null);
 
     const { name, description, localFiles, metadata, id } = data.stripeProduct;
     const { currency } = skus[0];
@@ -30,17 +34,44 @@ const ItemPage = ({ data }) => {
     const currencySymbol = getCurrencySymbol(currency);
     const qualifiedPrice = `${currencySymbol}${(price / 100).toFixed(2)}`;
 
+    const pocketDetails = extractPocketDetails(metadata);
+
+    useEffect(() => {
+        // selectedSku is needed to avoid clicking on mount of component
+        if (!addToCardPending && selectedSku) addToCartBtnEl.current.click();
+    }, [addToCardPending]);
+
     function handleBtnClick() {
-        onItemSelection("add", {
-            name,
-            price,
-            currency,
-            image: localFiles[0],
-            id: selectedSku,
-        });
+        if (!selectedSku) {
+            setAddToCardPending(true);
+            menuButtonEl.current.click();
+        } else {
+            onItemSelection("add", {
+                name: `${name} - ${selectedSku.attributes.size}`,
+                price,
+                currency,
+                image: localFiles[0],
+                id: selectedSku.id,
+            });
+        }
     }
 
-    function handleSizeSelection() {}
+    function handleSizeSelection(sku) {
+        setSelectedSku(sku);
+
+        if (addToCardPending) {
+            setAddToCardPending(false);
+        }
+    }
+
+    /* This is a little strange I know, but it's the only way to prevent the dropdown from
+    closing if you click on an out of stock item. If out of stock handleSizeSelection will not
+    be called */
+    function handleSizeClick(e, outOfStock) {
+        if (outOfStock) e.preventDefault();
+    }
+
+    const sizeSelectText = selectedSku ? `AU ${selectedSku.attributes.size}` : "Pick a size...";
 
     return (
         <Layout>
@@ -69,20 +100,23 @@ const ItemPage = ({ data }) => {
                             <div className="clothing-description">{description}</div>
                             <div className="clothing-sizing-container">
                                 <Menu>
-                                    <MenuButton>
-                                        Pick a size...{" "}
+                                    <MenuButton ref={menuButtonEl}>
+                                        <span className="menu-dropdown-text">{sizeSelectText}</span>
                                         <span className="menu-dropdown-icon" aria-hidden>
                                             ▾
                                         </span>
                                     </MenuButton>
                                     <MenuList>
                                         {skus.map((sku) => {
-                                            const formattedStockValue = formatStockValue(sku.inventory.value);
+                                            const formattedStockValue = formatStockValue(
+                                                sku.inventory.value
+                                            );
                                             const outOfStock = formattedStockValue === "OUT OF STOCK";
 
                                             return (
                                                 <MenuItem
-                                                    onClick={handleSizeSelection}
+                                                    onClick={(e) => handleSizeClick(e, outOfStock)}
+                                                    onSelect={() => handleSizeSelection(sku)}
                                                     className="size-menu-item"
                                                     data-out-of-stock={outOfStock}
                                                 >
@@ -101,8 +135,8 @@ const ItemPage = ({ data }) => {
                                     Size Guide
                                 </button>
                             </div>
-                            <div className="clothing-link-container">
-                                <button className="clothing-link" onClick={handleBtnClick}>
+                            <div className="add-cart-btn-container">
+                                <button className="add-cart-btn" onClick={handleBtnClick} ref={addToCartBtnEl}>
                                     Add to cart
                                 </button>
                             </div>
@@ -110,9 +144,7 @@ const ItemPage = ({ data }) => {
                     </div>
 
                     <div className="clothing-classifications">
-                        <h4>Materials</h4>
-                        <div />
-                        <div className="clothing-pockets-classification" />
+                        <ItemDetailsSection pockets={pocketDetails} materials={metadata.materials} />
                     </div>
                 </div>
             </div>
@@ -130,10 +162,23 @@ const ItemPage = ({ data }) => {
     );
 };
 
+function extractPocketDetails(metadata) {
+    return Object.keys(metadata).reduce((pockets, field) => {
+        if (field.toLowerCase().includes("pockets")) {
+            const pocketDetails = { type: field, classification: metadata[field] };
+            return [ ...pockets, pocketDetails ];
+        }
+        return pockets;
+    }, []);
+}
+
 function formatStockValue(stockValue) {
     if (!stockValue) return;
 
-    return stockValue.split("_").join(" ").toUpperCase();
+    return stockValue
+        .split("_")
+        .join(" ")
+        .toUpperCase();
 }
 
 export default ItemPage;
@@ -162,6 +207,12 @@ export const query = graphql`
             description
             metadata {
                 croppedBottom
+                material
+                supplier
+                frontPockets
+                sidePockets
+                backPockets
+                extraPockets
             }
             localFiles {
                 childImageSharp {
