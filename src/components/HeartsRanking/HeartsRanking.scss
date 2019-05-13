@@ -1,0 +1,92 @@
+.hearts-ranking {
+    .hearts[data-hearts-highlighted="0"] {
+        .main-heart-inner {
+            fill: url(#heart-greyed-fill);
+        }
+        .main-heart-middle {
+            fill: url(#heart-greyed-fill);
+        }
+        .main-heart-outer {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-2-inner {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-2-middle {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-2-outer {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-inner {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-middle {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-outer {
+            fill: url(#heart-greyed-fill);
+        }
+    }
+
+    .hearts[data-hearts-highlighted="1"] {
+        .heart-2-inner {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-2-middle {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-2-outer {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-inner {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-middle {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-outer {
+            fill: url(#heart-greyed-fill);
+        }
+    }
+
+    .hearts[data-hearts-highlighted="2"] {
+        .heart-3-inner {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-middle {
+            fill: url(#heart-greyed-fill);
+        }
+        .heart-3-outer {
+            fill: url(#heart-greyed-fill);
+        }
+    }
+
+    .main-heart-middle {
+        fill: url(#main-heart-middle-fill);
+    }
+    .main-heart-inner {
+        fill: url(#heart-inner-fill);
+    }
+    .main-heart-outer {
+        fill: url(#main-heart-outer-fill);
+    }
+    .heart-2-middle {
+        fill: url(#heart-2-middle-fill);
+    }
+    .heart-2-inner {
+        fill: url(#heart-2-inner-fill);
+    }
+    .heart-2-outer {
+        fill: url(#heart-2-outer-fill);
+    }
+    .heart-3-middle {
+        fill: url(#heart-3-middle-fill);
+    }
+    .heart-3-inner {
+        fill: url(#heart-3-inner-fill);
+    }
+    .heart-3-outer {
+        fill: url(#heart-3-outer-fill);
+    }
+}
