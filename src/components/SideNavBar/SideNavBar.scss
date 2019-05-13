@@ -25,6 +25,8 @@ $light-text: rgb(112, 112, 112);
     .top-level-items-container {
         height: 100%;
         overflow-y: scroll;
+        background: black;
+        color: white;
     }
 
     .top-level-items {
@@ -42,6 +44,5 @@ $light-text: rgb(112, 112, 112);
     .nav-bar-header {
         line-height: 60px;
         text-align: center;
-        background: #eaeaea;
     }
 }
