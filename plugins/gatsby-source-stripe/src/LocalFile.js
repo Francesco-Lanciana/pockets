@@ -57,23 +57,6 @@ class LocalFile {
     if (!urls) return;
 
     const urlsArray = convertToArray(urls);
-
-    // We want to check if each file is in the cache
-    const checkCachePromises = urlsArray.map((url) => {
-      const cacheHeaders = this.createRemoteArgs.cache.get(`create-remote-file-node-${url}`);
-      return cacheHeaders;
-    });
-    const checkCacheResults = Promise.all(checkCachePromises);
-
-    // This works because map and Promise.all are strictly ordered
-    const urlsNotCached = urlsArray.filter((urls, i) => {
-        if (checkCacheResults[i] && checkCacheResults[i].etag) return false;
-        return true;
-    })
-
-    // If all files have been cached then we don't have to do anything
-    if (urlsNotCached.length === 0) return null;
-
     const { auth, ...createRemoteArgsWithoutAuth } = this.createRemoteArgs; // eslint-disable-line no-unused-vars
     const ext = type && `.${type}`;
 
