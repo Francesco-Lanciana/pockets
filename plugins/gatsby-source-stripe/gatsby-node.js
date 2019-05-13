@@ -2,7 +2,7 @@
 
 const stripeClient = require("stripe");
 
-const StripeObject = require("./StripeObject");
+const StripeObject = require("./StripeObject.js");
 
 const LocalFile = require("./LocalFile");
 
