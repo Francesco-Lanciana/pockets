@@ -103,9 +103,7 @@ All list responses are fully paginated.
 
 Setting `downloadFiles: true` in the plugin configuration enables downloading of files associated with File objects, and images on Sku and Product objects. A Gatsby [File node](https://github.com/gatsbyjs/gatsby/tree/master/packages/gatsby-source-filesystem#how-to-query) is created for each downloaded file, and references are placed on the `localFiles` field of their Stripe nodes.
 
-If you have files that are not hosted on Stripe, but that Stripe is pointing to (via a URL) they need to be
-public. Currently you can not set custom auth headers due to limitations in [gatsby-source-filesystem](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/), as such the current implementation of this
-plugin simply doesn't send any auth headers. In the future this limitation may be removed.
+This plugin will automatically use your Stripe secret key for authentication when fetching files hosted by Stripe that aren't public (don't have an associated File Link). Any images that you are hosting yourself need to be public. Currently you can not set custom auth headers due to limitations in [gatsby-source-filesystem](https://www.gatsbyjs.org/packages/gatsby-source-filesystem/), however this limitation may be removed in the future.
 
 You can give these File nodes to plugins like [gatsby-image](https://using-gatsby-image.gatsbyjs.org/) to create responsive images and/or [gatsby-transformer-sharp](https://image-processing.gatsbyjs.org/) to process images at build.
 

@@ -1,6 +1,8 @@
 const stripeClient = require("stripe");
-const StripeObject = require("./stripeObject");
+const StripeObject = require("./StripeObject");
 const LocalFile = require("./LocalFile");
+const checkForSecretKey = require('./checkForSecretKey')
+const checkForStripeObjects = require("./checkForStripeObjects")
 
 exports.sourceNodes = async (
   { actions, cache, createNodeId, createContentDigest, store },
@@ -8,27 +10,15 @@ exports.sourceNodes = async (
 ) => {
   const { createNode } = actions;
 
-  if (!objects.length) {
-    console.error(
-      new Error(
-        "No Stripe object types found in your gatsby-config. Add types to the objects array like this: ['Balance', 'Customer', 'BalanceTransaction']"
-      )
-    );
-    return;
-  }
-
-  if (!secretKey) {
-    console.error(
-      new Error("No Stripe secret key found in your gatsby-config.")
-    );
-    return;
-  }
+  checkForStripeObjects(objects)
+  checkForSecretKey(secretKey)
 
   const localFile = new LocalFile({
     store,
     cache,
     createNode,
-    createNodeId
+    createNodeId,
+    auth: { htaccess_user: secretKey }
   });
 
   const stripe = stripeClient(secretKey);
@@ -103,7 +93,10 @@ exports.sourceNodes = async (
       let fileNodesMap;
 
       if (downloadFiles) {
-        fileNodesMap = await localFile.downloadFiles(payload, stripeObj.type);
+        fileNodesMap = await localFile.downloadFiles(
+          payload,
+          stripeObj.type
+        );
       }
 
       const node = stripeObj.node(createContentDigest, payload, fileNodesMap);
