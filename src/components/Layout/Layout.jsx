@@ -37,16 +37,16 @@ const Layout = ({ children, offscreenNavBar = false }) => {
                 selectedItemId={selectedItemId}
                 hidden={isMenuHidden}
             >
-                <NavItem to="/?sort=pants" id="pants">
+                <NavItem to="/?filter=pants" id="pants">
                     Pants
                 </NavItem>
-                <NavItem to="/?sort=pants" id="shorts">
+                <NavItem to="/?filter=shorts" id="shorts">
                     Shorts
                 </NavItem>
-                <NavItem to="/?sort=pants" id="skirts">
+                <NavItem to="/?filter=skirts" id="skirts">
                     Skirts
                 </NavItem>
-                <NavItem to="/?sort=pants" id="leggings">
+                <NavItem to="/?filter=leggings" id="leggings">
                     Leggings
                 </NavItem>
             </SideNavBar>
