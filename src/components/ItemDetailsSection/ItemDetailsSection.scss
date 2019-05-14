@@ -49,7 +49,7 @@
             }
         }
 
-        @media screen and (max-width: 360px) {
+        @media screen and (max-width: 355px) {
             display: none;
         }
     }
@@ -92,6 +92,7 @@
     .pocket-explanation {
         line-height: 1.4rem;
         margin-top: 5px;
+        font-size: 0.9rem;
     }
 
     .clothing-materials {
