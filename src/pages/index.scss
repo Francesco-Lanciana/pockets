@@ -57,8 +57,43 @@ $screen-bp-mobile: $card-min-width + 20px;
         }
     }
 
+    .text-card {
+        cursor: pointer;
+        //border: 2px solid #eeeeee;
+        padding-bottom: 125%;
+        position: relative;
+
+        > a {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            height: 100%;
+        }
+    }
+
+    .text-card::after {
+        content: "";
+        width: 100%;
+        position: absolute;
+        padding-bottom: calc(125% + 8px);
+        border: 2px solid #eeeeee;
+        pointer-events: none;
+    }
+
+    .text-card-message {
+        position: absolute;
+        width: 80%;
+        top: 40%;
+        left: 10%;
+        text-align: center;
+        transform: translateY(-50%);
+        color: black;
+        letter-spacing: 0.35rem;
+        font-size: 1.2rem;
+    }
+
     .clothing-image-container {
-        background: radial-gradient(#F8F4EE,#e6d7c1);
+        background: radial-gradient(#f8f4ee, #e6d7c1);
         padding-bottom: 10px;
     }
 

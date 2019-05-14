@@ -16,12 +16,36 @@ function getQualifiedPrice(currency, price) {
     return qualifiedPrice;
 }
 
-const IndexPage = ({ data }) => {
+function parseQueryString(search) {
+    try {
+        const fieldValuePairs = search.slice(1).split("&");
+        const queryStringMap = fieldValuePairs.reduce((qsMap, fieldValuePair) => {
+            const [field, value] = fieldValuePair.split("=");
+            return { ...qsMap, [decodeURIComponent(field)]: decodeURIComponent(value) };
+        }, {});
+
+        return queryStringMap;
+    } catch (e) {
+        return {};
+    }
+}
+
+const IndexPage = ({ data, location }) => {
+    const products = data.allStripeProduct.edges.map(({ node }) => node);
+    let filteredProducts = products;
+    const parsedQueryString = parseQueryString(location.search);
+    if (parsedQueryString["filter"]) {
+        filteredProducts = products.filter(
+            ({ metadata }) => metadata.type === parsedQueryString["filter"]
+        );
+    }
+
+    //const selectedProducts = products.filter
     return (
         <Layout>
             <div className="list-page">
                 <main className="clothing-cards">
-                    {data.allStripeProduct.edges.map(({ node: product }) => {
+                    {filteredProducts.map((product) => {
                         const relatedSkus = data.allStripeSku.edges.filter(
                             ({ node }) => node.product.id === product.id
                         );
@@ -55,6 +79,13 @@ const IndexPage = ({ data }) => {
                             </div>
                         );
                     })}
+                    {parsedQueryString["filter"] && (
+                        <div className="text-card">
+                        <Link to={`/`} className="item-link">
+                            <h2 className="text-card-message">FOR MORE CLICK HERE</h2>
+                        </Link>
+                    </div>
+                    )}
                 </main>
             </div>
         </Layout>
@@ -86,6 +117,8 @@ export const query = graphql`
                     description
                     metadata {
                         croppedBottom
+                        type
+                        supplier
                     }
                     localFiles {
                         childImageSharp {
