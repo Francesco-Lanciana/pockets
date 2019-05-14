@@ -76,6 +76,9 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
                             <li className="site-navigation-link">
                                 <Link to="/?filter=skirts">Skirts</Link>
                             </li>
+                            <li className="site-navigation-link">
+                                <Link to="/?filter=leggings">Leggings</Link>
+                            </li>
                         </ul>
                     </nav>
                 )}
