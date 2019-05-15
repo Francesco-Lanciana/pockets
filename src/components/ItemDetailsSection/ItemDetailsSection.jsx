@@ -36,7 +36,9 @@ const ItemDetailsSection = ({ pockets, materials="" }) => {
         if (window.IntersectionObserver) {
             initObserver();
         } else {
-            console.log("IntersectionObserver not supported.");
+            document.querySelectorAll('.pocket-review-container').forEach(el => {
+                el.classList.add("in-view");
+            });
         }
     }, []);
 
