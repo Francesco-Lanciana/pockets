@@ -66,13 +66,19 @@ module.exports = {
             options: {
                 objects: ["Sku", "Product"],
                 secretKey: process.env.STRIPE_SECRET_KEY,
-                downloadFiles: true
+                downloadFiles: true,
             },
         },
         {
             resolve: `gatsby-plugin-stripe`,
             options: {
                 async: true,
+            },
+        },
+        {
+            resolve: `gatsby-plugin-google-analytics`,
+            options: {
+                trackingId: "UA-140201498-1",
             },
         },
         //`gatsby-plugin-layout`
