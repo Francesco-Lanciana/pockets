@@ -215,21 +215,28 @@
 [data-reach-dialog-content] {
     position: relative;
     padding: 0 !important;
+    width: 100% !important; // 100vw includes any scrollbars which is bad
+    height: 80%;
+    max-width: 1200px;
 
     .dialog-content {
-        max-height: 80vh;
         padding: 2rem;
         overflow-y: auto;
+        height: 100%;
     }
 
     .close-button {
         position: absolute;
-        right: 20px;
+        right: 10px;
         border: none;
         font-size: 2rem;
         top: 10px;
-        background: linear-gradient(to right, #FFB7B7, #FF7192);
-        background-clip: text;
-        color: transparent;
+        background: inherit;
+
+        > span {
+            background: linear-gradient(to right, #FFB7B7, #FF7192);
+            background-clip: text;
+            color: transparent;
+        }
     }
 }
