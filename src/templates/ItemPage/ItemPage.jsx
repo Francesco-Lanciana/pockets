@@ -166,7 +166,7 @@ const ItemPage = ({ data }) => {
                     </div>
 
                     <div className="clothing-classifications">
-                        <ItemDetailsSection pockets={pocketDetails} materials={metadata.materials} />
+                        <ItemDetailsSection pockets={pocketDetails} materials={metadata.material} />
                     </div>
                 </div>
             </div>
