@@ -5,7 +5,7 @@ import HeartsRanking from "@components/HeartsRanking/HeartsRanking";
 
 import "./ItemDetailsSection.scss";
 
-const ItemDetailsSection = ({ pockets, materials="" }) => {
+const ItemDetailsSection = ({ pockets, materials = "" }) => {
     const itemDetailsSectionEl = useRef(null);
     // acceptable roomy glorious
 
@@ -36,39 +36,43 @@ const ItemDetailsSection = ({ pockets, materials="" }) => {
         if (window.IntersectionObserver) {
             initObserver();
         } else {
-            document.querySelectorAll('.pocket-review-container').forEach(el => {
+            document.querySelectorAll(".pocket-review-container").forEach((el) => {
                 el.classList.add("in-view");
             });
         }
     }, []);
 
+    const sortedPockets = pockets
+        .map((pocket) => ({ ...pocket }))
+        .sort((a, b) => getRank(b.classification) - getRank(a.classification));
+
     return (
-        <div className="item-details-section" ref={itemDetailsSectionEl}>
+        <div className="item-details-section">
             <h2 className="section-heading">Pockets Review</h2>
             <hr data-margin-med />
-            {pockets.map(({ type, classification }) => (
-                <div className="pocket-review-container">
-                    <div className="pocket-image-container">
-                        <HeartsRanking numHearts={getRank(classification)} />
+            <div className="pocket-reviews" ref={itemDetailsSectionEl}>
+                {sortedPockets.map(({ type, classification }) => (
+                    <div className="pocket-review-container" data-classification={classification}>
+                        <div className="pocket-image-container">
+                            <HeartsRanking numHearts={getRank(classification)} />
+                        </div>
+                        <div className="pocket-review">
+                            <h3 className="pocket-type">
+                                <span>{parsePocketType(type)}</span>
+                            </h3>
+                            <h4 className="pocket-classification">{classification}</h4>
+                            <p className="pocket-explanation">{getPocketExplanation(classification)}</p>
+                        </div>
                     </div>
-                    <div className="pocket-review">
-                        <h3 className="pocket-type">
-                            <span>{parsePocketType(type)}</span>
-                        </h3>
-                        <h4 className="pocket-classification">{classification}</h4>
-                        <p className="pocket-explanation">{getPocketExplanation(classification)}</p>
-                    </div>
-                </div>
-            ))}
-
+                ))}
+            </div>
             <div className="clothing-materials">
                 <h3 className="section-heading">Materials</h3>
                 <hr data-margin-small />
                 <ul>
                     {parseMaterials(materials).map((material) => (
-                        <li>material</li>
+                        <li className="material">{material}</li>
                     ))}
-                    <li>material</li>
                 </ul>
             </div>
         </div>

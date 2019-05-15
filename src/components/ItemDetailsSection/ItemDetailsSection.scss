@@ -5,6 +5,11 @@
         font-weight: 500;
     }
 
+    .pocket-reviews {
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
     .pocket-review-container {
         margin-bottom: 9%;
         display: flex;
@@ -32,6 +37,12 @@
 
         > :nth-child(2) {
             margin-right: 10px;
+        }
+    }
+
+    .pocket-review-container[data-classification="none"] {
+        svg {
+            height: 68px;
         }
     }
 
@@ -118,6 +129,17 @@
             top: 6px;
             position: absolute;
         }
+    }
+
+    .material {
+        margin-bottom: 8px;
+    }
+
+    hr {
+        height: 1px;
+        color: #dedede;
+        background-color: #dedede;
+        border: none;
     }
 
     [data-margin-small] {
