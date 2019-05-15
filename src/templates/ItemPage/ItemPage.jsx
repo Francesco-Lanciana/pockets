@@ -24,6 +24,7 @@ const ItemPage = ({ data }) => {
     const [selectedSku, setSelectedSku] = useState(null);
     const [showDialog, setShowDialog] = useState(false);
     const [addToCardPending, setAddToCardPending] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
     const menuButtonEl = useRef(null);
     const addToCartBtnEl = useRef(null);
 
@@ -70,6 +71,27 @@ const ItemPage = ({ data }) => {
     function handleSizeClick(e, outOfStock) {
         if (outOfStock) e.preventDefault();
     }
+
+    // We need
+    function handleSizeGuideBtnClick(e) {
+        setScrollY(document.scrollingElement.scrollTop);
+        setShowDialog(true);
+    }
+
+    function handleCloseBtnClick() {
+        setShowDialog(false);
+    }
+
+    useEffect(() => {
+        if (showDialog === true) {
+            document.body.style.setProperty("overflow", "scroll", "important");
+            document.body.scrollTo(0, scrollY);
+        }
+        if (showDialog === false) {
+            document.body.style.removeProperty("overflow");
+            document.scrollingElement.scrollTo(0, scrollY);
+        }
+    }, [showDialog]);
 
     const sizeSelectText = selectedSku ? `AU ${selectedSku.attributes.size}` : "Pick a size...";
 
@@ -131,7 +153,7 @@ const ItemPage = ({ data }) => {
                                         })}
                                     </MenuList>
                                 </Menu>
-                                <button className="size-guide-btn" onClick={() => setShowDialog(true)}>
+                                <button className="size-guide-btn" onClick={handleSizeGuideBtnClick}>
                                     Size Guide
                                 </button>
                             </div>
@@ -150,12 +172,12 @@ const ItemPage = ({ data }) => {
             </div>
 
             <Dialog isOpen={showDialog}>
-                <button className="close-button" onClick={() => setShowDialog(false)}>
+                <button className="close-button" onClick={handleCloseBtnClick}>
                     <VisuallyHidden>Close</VisuallyHidden>
                     <span aria-hidden>×</span>
                 </button>
                 <div className="dialog-content">
-                    <p>Hello there. I am a dialog</p>
+                    <p>Hello there! Our size guide is coming soon!</p>
                 </div>
             </Dialog>
         </Layout>
