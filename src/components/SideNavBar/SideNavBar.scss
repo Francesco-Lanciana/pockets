@@ -11,6 +11,7 @@ $light-text: rgb(112, 112, 112);
     background-color: #fafafa;
     box-shadow: inset -1px 0 0 #e5e5e5;
     transition: transform 0.3s;
+    will-change: transform;
     color: $light-text;
     transform: translate3d(
         0,
