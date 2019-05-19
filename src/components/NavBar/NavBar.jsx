@@ -61,7 +61,7 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
                         <MenuIcon onClick={onToggleMenu} />
                     </div>
                 )}
-                <Link to="/" className="logo-container">
+                <Link to="/" className="logo-container" onClick={() => { document.body.style.overflow = "visible" }}>
                     <img src={logo} className="logo" />
                 </Link>
                 {showNavLinks && (
