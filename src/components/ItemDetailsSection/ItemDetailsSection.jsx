@@ -52,7 +52,7 @@ const ItemDetailsSection = ({ pockets, materials = "" }) => {
             <hr data-margin-med />
             <div className="pocket-reviews" ref={itemDetailsSectionEl}>
                 {sortedPockets.map(({ type, classification }) => (
-                    <div className="pocket-review-container" data-classification={classification}>
+                    <div className="pocket-review-container" data-classification={classification} key={type}>
                         <div className="pocket-image-container">
                             <HeartsRanking numHearts={getRank(classification)} />
                         </div>
@@ -71,7 +71,7 @@ const ItemDetailsSection = ({ pockets, materials = "" }) => {
                 <hr data-margin-small />
                 <ul>
                     {parseMaterials(materials).map((material) => (
-                        <li className="material">{material}</li>
+                        <li className="material" key={material}>{material}</li>
                     ))}
                 </ul>
             </div>
