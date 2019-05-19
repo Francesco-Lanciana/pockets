@@ -1,0 +1,196 @@
+$main-color: #6394f8;
+$light-text: #abb0be;
+
+$shopping-cart-item-size: 110px;
+$shopping-cart-picture-width: 60px;
+$shopping-cart-btn-height: 54px;
+
+//$quantity-change-btn-color:
+$quantity-btn-size: 16px;
+$quantity-btn-line-thickness: 2px;
+$quantity-btn-line-length: 8px;
+
+.cart-item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 110px 1.4fr 1.2fr 45px;
+    grid-gap: 10px 20px;
+    grid-template-areas: "image metadata group";
+
+    @media screen and (max-width: 850px) {
+        grid-template-columns: 110px 1fr;
+        grid-template-areas: "image metadata"
+                             "image group";
+    }
+
+    .clothing-image-container {
+        grid-area: image;
+        overflow: hidden;
+        height: $shopping-cart-item-size;
+        flex: 0 0 $shopping-cart-item-size;
+        background: #f7f4ef;
+        border-radius: 50%;
+        position: relative;
+    }
+
+    .clothing-image-container[data-cropped="false"] {
+        overflow: visible;
+
+        .clothing-image {
+            top: 50%;
+            transform: translateY(-50%);
+        }
+    }
+
+    .clothing-image {
+        position: absolute !important;
+        width: 100%;
+    }
+
+    .shopping-cart-item-details {
+        grid-area: metadata;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-right: 12px;
+        flex: 1 1 auto;
+    }
+
+    .item-name {
+        display: block;
+        font-size: 15px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2; /* number of lines to show */
+    }
+
+    .item-price {
+        color: $main-color;
+        font-weight: 700;
+        margin-right: 8px;
+        font-size: 1rem;
+        line-height: calc(1.5rem + 2px);
+    }
+
+    .item-quantity {
+        color: $light-text;
+        font-size: 14px;
+    }
+
+    .item-size {
+        font-size: 0.9rem;
+        color: $light-text;
+    }
+
+    .item-supplier {
+        font-size: 0.9rem;
+        color: #abb0be;
+    }
+
+    .detail-grouping {
+        grid-area: group;
+        display: flex;
+        align-content: center;
+        justify-content: space-around;
+        //max-width: 200px;
+
+        @media screen and (max-width: 850px) {
+            justify-content: flex-start;
+        }
+    }
+
+    .quantity-changer {
+        display: flex;
+        align-items: center;
+        margin-right: 15px;
+    }
+
+    .quantity-changer > :not(:last-child) {
+        margin-right: 0.75rem;
+    }
+
+    .quantity-changer[data-quantity="0"] {
+        .quantity-change-btn.minus {
+            --btn-color: grey;
+        }
+    }
+
+    .quantity {
+        border: 1px solid #abb0be;
+        border-radius: 4px;
+        width: 40px;
+        text-align: center;
+        padding: 0;
+        line-height: 1.5rem;
+        box-sizing: border-box;
+        color: #abb0be;
+
+        &:focus,
+        &:active {
+            outline: 1px solid hsla(220, 91%, 82%, 1);
+        }
+    }
+
+    .quantity-change-btn {
+        --btn-color: black;
+
+        width: $quantity-btn-size;
+        height: $quantity-btn-size;
+        border-radius: 28%;
+        border: none;
+        position: relative;
+        background: inherit;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .plus::before,
+    .minus::before {
+        content: "";
+        position: absolute;
+        left: calc(50% - #{$quantity-btn-line-length / 2});
+        width: $quantity-btn-line-length;
+        height: $quantity-btn-line-thickness;
+        top: calc(50% - #{$quantity-btn-line-thickness / 2});
+        background: var(--btn-color);
+    }
+
+    .plus::after {
+        content: "";
+        position: absolute;
+        left: calc(50% - #{$quantity-btn-line-thickness / 2});
+        width: $quantity-btn-line-thickness;
+        height: $quantity-btn-line-length;
+        top: calc(50% - #{$quantity-btn-line-length / 2});
+        background: var(--btn-color);
+    }
+
+    .close-btn {
+        position: relative;
+        padding: 0;
+        border: none;
+        width: 18px;
+        height: 18px;
+        background: inherit;
+        justify-self: center;
+        cursor: pointer;
+    }
+
+    .close-btn:before, .close-btn:after {
+        position: absolute;
+        content: ' ';
+        height: 16px;
+        top: 0;
+        width: 2px;
+        background-color: #333;
+      }
+      .close-btn:before {
+        transform: rotate(45deg);
+      }
+      .close-btn:after {
+        transform: rotate(-45deg);
+      }
+}
