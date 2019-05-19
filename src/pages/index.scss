@@ -6,7 +6,7 @@ $card-content-padding-sm: 20px;
 $screen-bp-large: $card-min-width * 3 + $card-gap * 2 + $card-content-padding-lg * 2 + 20px;
 $screen-bp-med: $card-min-width * 2 + $card-gap * 1 + $card-content-padding-lg * 2 + 20px;
 $screen-bp-sm: 570px;
-$screen-bp-mobile: $card-min-width + 20px;
+$screen-bp-mobile: $card-min-width + 30px;
 
 .list-page {
     .navbar {
@@ -106,8 +106,9 @@ $screen-bp-mobile: $card-min-width + 20px;
         // background: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0) 60%, #fff 60.1%, #fff 65%, rgba(0,0,0,0) 65.1%);
     }
 
+    // Be careful about adding more padding - take into account discounted prices at around the 360px mark
     .clothing-details {
-        padding: 10px 15px 20px 5px;
+        padding: 10px 10px 20px 5px;
         display: flex;
         flex-direction: column;
         padding-bottom: 10px;
@@ -137,8 +138,23 @@ $screen-bp-mobile: $card-min-width + 20px;
         min-width: 70px;
         font-weight: 700;
         font-size: 0.875rem;
-        letter-spacing: 0.04em;
+        letter-spacing: 0.075em;
         color: #1c1c1c;
+
+        > :first-child {
+            margin-right: 8px;
+        }
+    }
+
+    .previous-price {
+        font-size: 0.75rem;
+        text-decoration: line-through;
+        color: grey;
+        font-weight: 500;
+    }
+
+    .clothing-price[data-discounted="true"] .current-price {
+        color: #6394f8;
     }
 
     .item-link {

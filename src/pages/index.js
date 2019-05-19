@@ -9,9 +9,11 @@ import { getCurrencySymbol } from "@utils/currencyHelpers";
 
 import "./index.scss";
 
-function getQualifiedPrice(currency, price) {
+function getQualifiedPrice(currency, price, showCurrency=true) {
     const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = `${currency.toUpperCase()} ${currencySymbol}${(price / 100).toFixed(2)}`;
+    const qualifiedPrice = showCurrency ?
+        `${currency.toUpperCase()} ${currencySymbol}${(price / 100).toFixed(2)}` :
+        `${currencySymbol}${(price / 100).toFixed(2)}`;
 
     return qualifiedPrice;
 }
@@ -49,7 +51,9 @@ const IndexPage = ({ data, location }) => {
                         const relatedSkus = data.allStripeSku.edges.filter(
                             ({ node }) => node.product.id === product.id
                         );
-                        const price = Math.min(...relatedSkus.map(({ node }) => node.price));
+                        const rrpPrice = Math.min(...relatedSkus.map(({ node }) => node.price));
+                        const discountedPrice = rrpPrice - product.metadata.discount;
+                        const isDiscounted = rrpPrice !== discountedPrice;
                         const { currency } = relatedSkus[0].node;
 
                         return (
@@ -71,8 +75,15 @@ const IndexPage = ({ data, location }) => {
                                     </div>
                                     <div className="clothing-details">
                                         <div className="clothing-name">{product.name}</div>
-                                        <div className="clothing-price">
-                                            {getQualifiedPrice(currency, price)}
+                                        <div className="clothing-price" data-discounted={isDiscounted}>
+                                            <span className="current-price">
+                                                {getQualifiedPrice(currency, discountedPrice)}
+                                            </span>
+                                            {isDiscounted && (
+                                                <span className="previous-price">
+                                                    {getQualifiedPrice(currency, rrpPrice, false)}
+                                                </span>
+                                            )}
                                         </div>
                                     </div>
                                 </Link>
@@ -81,10 +92,10 @@ const IndexPage = ({ data, location }) => {
                     })}
                     {parsedQueryString["filter"] && (
                         <div className="text-card">
-                        <Link to={`/`} className="item-link">
-                            <h2 className="text-card-message">FOR MORE CLICK HERE</h2>
-                        </Link>
-                    </div>
+                            <Link to={`/`} className="item-link">
+                                <h2 className="text-card-message">FOR MORE CLICK HERE</h2>
+                            </Link>
+                        </div>
                     )}
                 </main>
             </div>
@@ -119,6 +130,7 @@ export const query = graphql`
                         croppedBottom
                         type
                         supplier
+                        discount
                     }
                     localFiles {
                         childImageSharp {
