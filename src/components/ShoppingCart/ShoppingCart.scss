@@ -3,11 +3,16 @@ $light-text: #abb0be;
 
 $shopping-cart-padding: 15px;
 $shopping-cart-items-padding: 20px;
-$shopping-cart-header-padding: 15px;
+$shopping-cart-header-padding: 12px;
 $shopping-cart-btn-margin: 20px;
-$shopping-cart-item-height: 65px;
-$shopping-cart-picture-width: 65px;
+$shopping-cart-item-height: 60px;
+$shopping-cart-picture-width: 60px;
 $shopping-cart-btn-height: 54px;
+
+//$quantity-change-btn-color: 
+$quantity-btn-size: 16px;
+$quantity-btn-line-thickness: 2px;
+$quantity-btn-line-length: 8px;
 
 .shopping-cart {
     background: rgba(255, 255, 255, 0.98);
@@ -52,11 +57,14 @@ $shopping-cart-btn-height: 54px;
 
         .item-name {
             display: block;
-            padding-top: 5px;
-            font-size: 16px;
+            font-size: 15px;
+            max-width: 75%;
+
             overflow: hidden;
-            white-space: nowrap;
             text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-box-orient: vertical;
+            -webkit-line-clamp: 2; /* number of lines to show */
         }
 
         .item-price {
@@ -78,6 +86,7 @@ $shopping-cart-btn-height: 54px;
     .shopping-cart-item-details {
         display: flex;
         flex-direction: column;
+        justify-content: space-between;
         padding-right: 12px;
         width: calc(100% - #{$shopping-cart-picture-width} - 10px);
     }
@@ -85,7 +94,7 @@ $shopping-cart-btn-height: 54px;
     .shopping-cart-item-meta-details {
         display: flex;
         justify-content: space-between;
-        margin-top: 5px;
+        max-width: 125px;
     }
 
     .clothing-image-container {
@@ -128,7 +137,7 @@ $shopping-cart-btn-height: 54px;
         padding-top: $shopping-cart-items-padding;
     }
 
-    .checkout-btn {
+    .checkout-link {
         background: #6394f8;
         color: white;
         text-align: center;
@@ -143,9 +152,52 @@ $shopping-cart-btn-height: 54px;
         height: $shopping-cart-btn-height;
     }
 
-    .checkout-btn:disabled {
+    .checkout-link:disabled {
         background: inherit;
         border: 1px solid rgba(140, 140, 140, 0.5);
         color: rgba(140, 140, 140, 0.5);
+    }
+
+    .quantity-changer > :not(:last-child) {
+        margin-right: 6px;
+    }
+
+    .quantity-changer[data-quantity="0"] {
+        .quantity-change-btn.minus {
+            --btn-color: grey;
+        }
+    }
+
+    .quantity-change-btn {
+        --btn-color: black;
+
+        width: $quantity-btn-size;
+        height: $quantity-btn-size;
+        border-radius: 28%;
+        border: 1px solid var(--btn-color);
+        position: relative;
+        background: inherit;
+        padding: 0;
+        cursor: pointer;
+    }
+
+    .plus::before, .minus::before {
+        content: "";
+        position: absolute;
+        left: calc(50% - #{$quantity-btn-line-length / 2});
+        width: $quantity-btn-line-length;
+        height: $quantity-btn-line-thickness;
+        top: calc(50% - #{$quantity-btn-line-thickness / 2});
+        background: var(--btn-color);
+    }
+
+    .plus::after {
+        content: "";
+        position: absolute;
+        left: calc(50% - #{$quantity-btn-line-thickness / 2});
+        width: $quantity-btn-line-thickness;
+        height: $quantity-btn-line-length;
+        top: calc(50% - #{$quantity-btn-line-length / 2});
+        background: var(--btn-color);
     }
 }
