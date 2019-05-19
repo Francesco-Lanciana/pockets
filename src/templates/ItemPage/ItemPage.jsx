@@ -48,11 +48,13 @@ const ItemPage = ({ data }) => {
             menuButtonEl.current.click();
         } else {
             onItemSelection("add", {
-                name: `${name} - ${selectedSku.attributes.size}`,
+                name,
+                size: selectedSku.attributes.size,
                 price,
                 currency,
                 image: localFiles[0],
                 id: selectedSku.id,
+                metadata: metadata,
             });
         }
     }
@@ -141,6 +143,7 @@ const ItemPage = ({ data }) => {
                                                     onSelect={() => handleSizeSelection(sku)}
                                                     className="size-menu-item"
                                                     data-out-of-stock={outOfStock}
+                                                    key={sku.id}
                                                 >
                                                     <span>AU {sku.attributes.size}</span>
                                                     {outOfStock && (
