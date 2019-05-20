@@ -12,7 +12,7 @@ import ShoppingCartImage from "@images/shopping-cart-solid.svg";
 
 import "./ShoppingCart.scss";
 
-const ShoppingCart = ({ items }) => {
+const ShoppingCart = ({ items, onCloseBtnClick }) => {
     const { changeItemQuantity } = useContext(ShoppingCartContext);
     const numItems = items.reduce((total, { quantity }) => total + quantity, 0);
     const totalPrice = items.reduce((total, { price, quantity }) => total + price * quantity, 0);
@@ -60,9 +60,15 @@ const ShoppingCart = ({ items }) => {
                                         item.price / 100
                                     ).toFixed(2)}`}</span>
                                     <div className="quantity-changer" data-quantity={item.quantity}>
-                                        <button className="quantity-change-btn minus" onClick={() => handleQuantityChange(item.id, false)}></button>
+                                        <button
+                                            className="quantity-change-btn minus"
+                                            onClick={() => handleQuantityChange(item.id, false)}
+                                        />
                                         <span className="quantity">{item.quantity}</span>
-                                        <button className="quantity-change-btn plus" onClick={() => handleQuantityChange(item.id, true)}></button>
+                                        <button
+                                            className="quantity-change-btn plus"
+                                            onClick={() => handleQuantityChange(item.id, true)}
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -73,9 +79,18 @@ const ShoppingCart = ({ items }) => {
 
             {cartIsEmpty && <div className="empty-cart-message">You cart is currently empty</div>}
 
-            <Link to={`/checkout`} className="checkout-link" onClick={() => { document.body.style.overflow = "visible" }}>
-                Go To Checkout
-            </Link>
+            <div className="action-buttons">
+                <button className="close-btn shopping-cart-action-btn" onClick={onCloseBtnClick}>Close</button>
+                <Link
+                    to={`/checkout`}
+                    className="checkout-link shopping-cart-action-btn"
+                    onClick={() => {
+                        document.body.style.overflow = "visible";
+                    }}
+                >
+                    Go To Checkout
+                </Link>
+            </div>
         </div>
     );
 };
