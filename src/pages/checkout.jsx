@@ -55,6 +55,7 @@ const CheckoutPage = () => {
             <CheckoutNavBar />
             <div className="content-container">
                 <div className="items-container">
+                    <div className="delivery-banner">Free delivery on all items</div>
                     <div className="header">
                         <h1>Shopping Cart</h1>
                     </div>

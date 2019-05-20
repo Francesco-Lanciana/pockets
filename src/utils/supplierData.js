@@ -32,3 +32,5 @@ const metadata = {
         international: true,
     }
 }
+
+export default metadata;
