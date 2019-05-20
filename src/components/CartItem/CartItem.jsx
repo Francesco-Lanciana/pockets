@@ -3,6 +3,7 @@ import Img from "gatsby-image";
 
 import { useMedia } from "@hooks/window-hooks";
 import { getCurrencySymbol } from "@utils/currencyHelpers";
+import supplierData from "@utils/supplierData";
 
 import "./CartItem.scss";
 
@@ -22,9 +23,13 @@ const CartItem = ({
     const imageData = image.childImageSharp.fluid;
 
     function handleQuantityInputChange(id, value) {
-        const boundValue = Math.min(Math.max(parseInt(value), 0), 10);
+        onQuantityChange(id, () => value);
+    }
 
-        onQuantityChange(id, (q) => q + boundValue);
+    function handleQuantityInputFinalise(id, value) {
+        const boundValue = Math.min(Math.max(parseInt(value), 0), 9);
+
+        onQuantityChange(id, () => boundValue);
     }
 
     return (
@@ -46,18 +51,19 @@ const CartItem = ({
                 <div className="quantity-changer" data-quantity={quantity}>
                     <button
                         className="quantity-change-btn minus"
-                        onClick={() => onQuantityChange(id, (q) => q - 1)}
+                        onClick={() => onQuantityChange(id, (q) => Math.max(q - 1, 0))}
                     />
                     <input
                         type="number"
-                        max="10"
+                        max="9"
                         className="quantity"
                         value={quantity}
                         onChange={(e) => handleQuantityInputChange(id, e.target.value)}
+                        onBlur={(e) => handleQuantityInputFinalise(id, e.target.value)}
                     />
                     <button
                         className="quantity-change-btn plus"
-                        onClick={() => onQuantityChange(id, (q) => q + 1)}
+                        onClick={() => onQuantityChange(id, (q) => Math.min(q + 1, 9))}
                     />
                 </div>
                 <div className="item-price">{`${currencySymbol}${(price / 100).toFixed(2)}`}</div>
