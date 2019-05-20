@@ -220,6 +220,16 @@ $nav-height: 60px;
         top: 3px;
     }
 
+    .menu-icon-container::after {
+        content: "";
+        position: absolute;
+        width: 330%;
+        height: 180%;
+        left: -80%;
+        top: -40%;
+        cursor: pointer;
+    }
+
     .fade-enter {
         opacity: 0.01;
     }

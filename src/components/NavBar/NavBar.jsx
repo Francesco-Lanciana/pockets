@@ -55,10 +55,10 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
 
     return (
         <header className="navbar" data-show={alwaysPinned || isPinned} >
-            <div className="navbar-content" data-menu-visible={showMenu}>
+            <div className="navbar-content" data-menu-visible={!!showMenu}>
                 {showMenu && (
-                    <div className="menu-icon-container">
-                        <MenuIcon onClick={onToggleMenu} />
+                    <div className="menu-icon-container" onClick={onToggleMenu}>
+                        <MenuIcon />
                     </div>
                 )}
                 <Link to="/" className="logo-container" onClick={() => { document.body.style.overflow = "visible" }}>
@@ -96,7 +96,7 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
 
                 <CSSTransition classNames="fade" timeout={200} in={showShoppingCart} unmountOnExit>
                     <div className="shopping-cart-container" data-full-screen={useFullScreenCart}>
-                        <ShoppingCart items={itemsInCart} />
+                        <ShoppingCart items={itemsInCart} onCloseBtnClick={() => setShowShoppingCart(!showShoppingCart)}/>
                     </div>
                 </CSSTransition>
             </div>
