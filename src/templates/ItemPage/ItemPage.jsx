@@ -74,6 +74,10 @@ const ItemPage = ({ data }) => {
         if (outOfStock) e.preventDefault();
     }
 
+    function handleSizeKeyDown(e, outOfStock) {
+        if (e.keyCode === 13 && outOfStock) e.preventDefault();
+    }
+
     // We need
     function handleSizeGuideBtnClick(e) {
         setScrollY(document.scrollingElement.scrollTop);
@@ -141,6 +145,7 @@ const ItemPage = ({ data }) => {
                                                 <MenuItem
                                                     onClick={(e) => handleSizeClick(e, outOfStock)}
                                                     onSelect={() => handleSizeSelection(sku)}
+                                                    onKeyDown={(e) => handleSizeKeyDown(e, outOfStock)}
                                                     className="size-menu-item"
                                                     data-out-of-stock={outOfStock}
                                                     key={sku.id}
