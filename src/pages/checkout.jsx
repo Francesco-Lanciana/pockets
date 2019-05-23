@@ -4,6 +4,7 @@ import CheckoutNavBar from "@components/CheckoutNavBar/CheckoutNavBar";
 import CartItem from "@components/CartItem/CartItem";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
 import StripeApi from "@api/stripeApi";
+import { getCurrencySymbol } from "@utils/currencyHelpers";
 
 import "./checkout.scss";
 import "@styles/main.scss";
@@ -15,7 +16,11 @@ let stripe;
 
 const CheckoutPage = () => {
     const { itemsInCart, changeItemQuantity, removeItem } = useContext(ShoppingCartContext);
-    const cartIsEmpty = itemsInCart.length === 0;
+    const numItems = itemsInCart.reduce((total, { quantity }) => total + quantity, 0);
+    const cartIsEmpty = numItems === 0;
+    const totalPrice = itemsInCart.reduce((total, { price, quantity }) => total + price * quantity, 0);
+    const currencySymbol = getCurrencySymbol("aud");
+    const qualifiedTotalPrice = `${currencySymbol}${(totalPrice / 100).toFixed(2)}`;
 
     useEffect(() => {
         stripe =
@@ -55,25 +60,41 @@ const CheckoutPage = () => {
             <CheckoutNavBar />
             <div className="content-container">
                 <div className="items-container">
-                    <div className="delivery-banner">Free delivery on all items</div>
-                    <div className="header">
-                        <h1>Shopping Cart</h1>
+                    <div className="items-content-container">
+                        <div className="delivery-banner">Free delivery on all items</div>
+                        <div className="header">
+                            <h1>Shopping Cart</h1>
+                        </div>
+                        {!!itemsInCart.length && (
+                            <ul className="shopping-cart-items">
+                                {itemsInCart.map((item) => (
+                                    <li className="shopping-cart-item" key={item.id}>
+                                        <CartItem
+                                            {...item}
+                                            onQuantityChange={changeItemQuantity}
+                                            onRemoveItem={removeItem}
+                                        />
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
                     </div>
-                    {!!itemsInCart.length && (
-                        <ul className="shopping-cart-items">
-                            {itemsInCart.map((item) => (
-                                <li className="shopping-cart-item" key={item.id}>
-                                    <CartItem {...item} onQuantityChange={changeItemQuantity} onRemoveItem={removeItem}/>
-                                </li>
-                            ))}
-                        </ul>
-                    )}
                 </div>
 
                 <div className="checkout-container">
-                    <button className="checkout-btn" onClick={redirectToCheckout} disabled={cartIsEmpty}>
-                        Go To Payment
-                    </button>
+                    <div className="checkout-content-container">
+
+                        <div className="total-price">
+                            <span>Total: </span>
+                            <span>{qualifiedTotalPrice}</span>
+                        </div>
+                        <div className="number-items">
+                            {numItems} {numItems === 1 ? "item" : "items"}
+                        </div>
+                        <button className="checkout-btn" onClick={redirectToCheckout} disabled={cartIsEmpty}>
+                            Go To Payment
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -13,11 +13,30 @@ $shopping-cart-btn-height: 40px;
         @media screen and (max-width: 650px) {
             flex-direction: column;
         }
+
+        @media screen and (min-width: 650px) {
+            animation: enter .5s;
+            animation-delay: .1s;
+            animation-fill-mode: both;
+        }
+    }
+
+    @keyframes enter {
+        0% {
+            -webkit-transform: scale(.97);
+            transform: scale(.97);
+            opacity: 0
+        }
+    
+        to {
+            -webkit-transform: scale(1);
+            transform: scale(1);
+            opacity: 1
+        }
     }
 
     .items-container {
-        flex: 1 1 60%;
-        max-width: 900px;
+        flex: 1 1 50%;
         position: relative;
         padding: 50px 10px 20px 50px;
 
@@ -26,11 +45,30 @@ $shopping-cart-btn-height: 40px;
         }
     }
 
+    .items-content-container {
+        max-width: 800px;
+        margin: 0 5% 0 auto;
+    }
+
     .checkout-container {
-        flex: 1 0 auto;
-        padding: 0 20px;
+        flex: 1 1 20%;
+        padding: 0 4% 20px 80px;
         align-items: center;
         background: #3F4047;
+        transition: padding 0.3s;
+
+        @media screen and (max-width: 1080px) {
+            padding-left: 4%;
+        }
+    }
+
+    .checkout-content-container {
+        max-width: 380px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        color: white;
+        margin-top: 50px;
     }
 
     .delivery-banner {
@@ -50,7 +88,7 @@ $shopping-cart-btn-height: 40px;
     .header {
         display: flex;
         justify-content: space-between;
-        margin-bottom: 20px;
+        margin-bottom: 30px;
 
         h1 {
             font-size: 2rem;
@@ -60,10 +98,17 @@ $shopping-cart-btn-height: 40px;
     .shopping-cart-items {
         list-style-type: none;
         max-width: none;
+        margin-bottom: 30px;
 
         > :not(:last-child) {
             margin-bottom: 50px;
         }
+    }
+
+    .total-price {
+        font-size: 1.5rem;
+        letter-spacing: 0.05rem;
+        font-weight: 600;
     }
 
     .checkout-btn {
@@ -79,6 +124,5 @@ $shopping-cart-btn-height: 40px;
         border: none;
         height: $shopping-cart-btn-height;
         width: 100%;
-        max-width: 280px;
     }
 }
