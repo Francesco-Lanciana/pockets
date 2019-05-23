@@ -52,7 +52,7 @@ $quantity-btn-line-length: 8px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-        padding-right: 12px;
+        min-width: 140px;
         flex: 1 1 auto;
     }
 
