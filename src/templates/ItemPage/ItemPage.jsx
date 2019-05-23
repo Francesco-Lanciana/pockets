@@ -237,8 +237,10 @@ export const query = graphql`
             description
             metadata {
                 croppedBottom
+                croppedTop
                 material
                 supplier
+                discount
                 frontPockets
                 sidePockets
                 backPockets

@@ -21,6 +21,7 @@ const CartItem = ({
     const [showRemoveBtn] = useMedia("(min-width: 850px)", true, false);
     const currencySymbol = getCurrencySymbol("aud");
     const imageData = image.childImageSharp.fluid;
+    const isImageCropped = (metadata.croppedBottom === "true") || (metadata.croppedTop === "true");
 
     function handleQuantityInputChange(id, value) {
         onQuantityChange(id, () => value);
@@ -32,9 +33,10 @@ const CartItem = ({
         onQuantityChange(id, () => boundValue);
     }
 
+
     return (
         <div className="cart-item">
-            <div className="clothing-image-container" data-cropped={metadata.croppedBottom}>
+            <div className="clothing-image-container" data-cropped={isImageCropped}>
                 <Img
                     sizes={{ ...imageData }}
                     fluid={imageData}
