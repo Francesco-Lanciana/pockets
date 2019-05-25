@@ -7,7 +7,7 @@ $shopping-cart-header-padding: 12px;
 $shopping-cart-btn-margin: 20px;
 $shopping-cart-item-height: 60px;
 $shopping-cart-picture-width: 60px;
-$shopping-cart-btn-height: 54px;
+$shopping-cart-btn-height: 48px;
 
 //$quantity-change-btn-color: 
 $quantity-btn-size: 16px;
@@ -94,7 +94,8 @@ $quantity-btn-line-length: 8px;
     .shopping-cart-item-meta-details {
         display: flex;
         justify-content: space-between;
-        max-width: 125px;
+        max-width: 150px;
+        align-items: center;
     }
 
     .clothing-image-container {
@@ -176,8 +177,13 @@ $quantity-btn-line-length: 8px;
         color: rgba(140, 140, 140, 0.5);
     }
 
+    .quantity-changer {
+        display: flex;
+        align-items: center;
+    }
+
     .quantity-changer > :not(:last-child) {
-        margin-right: 6px;
+        margin-right: 10px;
     }
 
     .quantity-changer[data-quantity="0"] {
