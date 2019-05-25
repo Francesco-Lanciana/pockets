@@ -1,0 +1,21 @@
+.price-display {
+    color: #1c1c1c;
+    font-weight: 700;
+    font-size: 1em;
+
+    > :first-child {
+        margin-right: 8px;
+    }
+
+    .previous-price {
+        font-size: 0.875em;
+        text-decoration: line-through;
+        color: grey;
+        font-weight: 500;
+    }
+    
+    &[data-discounted="true"] .current-price {
+        color: #6394f8;
+    }
+}
+

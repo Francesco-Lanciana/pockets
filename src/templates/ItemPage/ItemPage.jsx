@@ -7,10 +7,10 @@ import VisuallyHidden from "@reach/visually-hidden";
 import FadeCarousel from "@components/FadeCarousel/FadeCarousel";
 import ItemDetailsSection from "@components/ItemDetailsSection/ItemDetailsSection";
 import Layout from "@components/Layout/Layout";
+import PriceDisplay from "@components/PriceDisplay/PriceDisplay";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
 import SEO from "@components/seo";
 
-import { getCurrencySymbol } from "@utils/currencyHelpers";
 import BackIcon from "@images/long-arrow-left-solid.svg";
 
 import "./ItemPage.scss";
@@ -30,10 +30,9 @@ const ItemPage = ({ data }) => {
 
     const { name, description, localFiles, metadata, id } = data.stripeProduct;
     const { currency } = skus[0];
+    const rrpPrice = Math.min(...skus.map(({ price }) => price));
+    const discountedPrice = rrpPrice - metadata.discount;
 
-    const price = Math.min(...skus.map(({ price }) => price));
-    const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = `${currencySymbol}${(price / 100).toFixed(2)}`;
 
     const pocketDetails = extractPocketDetails(metadata);
 
@@ -50,7 +49,7 @@ const ItemPage = ({ data }) => {
             onItemSelection("add", {
                 name,
                 size: selectedSku.attributes.size,
-                price,
+                price: discountedPrice,
                 currency,
                 image: localFiles[0],
                 id: selectedSku.id,
@@ -109,7 +108,7 @@ const ItemPage = ({ data }) => {
                     metadata={{
                         name: name,
                         description: description,
-                        price,
+                        price: discountedPrice,
                         currency,
                         imageUrl: localFiles[0].childImageSharp.fluid.src,
                         sku: id, // Fix this
@@ -124,7 +123,13 @@ const ItemPage = ({ data }) => {
                     <div className="clothing-quick-details">
                         <div className="sticky-container">
                             <div className="clothing-name">{name}</div>
-                            <div className="clothing-price">{qualifiedPrice}</div>
+                            <div className="clothing-price-container">
+                                <PriceDisplay
+                                    rrpPrice={rrpPrice}
+                                    discountedPrice={discountedPrice}
+                                    currency={currency}
+                                />
+                            </div>
                             <div className="clothing-description">{description}</div>
                             <div className="clothing-sizing-container">
                                 <Menu>
@@ -166,7 +171,11 @@ const ItemPage = ({ data }) => {
                                 </button>
                             </div>
                             <div className="add-cart-btn-container">
-                                <button className="add-cart-btn" onClick={handleBtnClick} ref={addToCartBtnEl}>
+                                <button
+                                    className="add-cart-btn"
+                                    onClick={handleBtnClick}
+                                    ref={addToCartBtnEl}
+                                >
                                     Add to cart
                                 </button>
                             </div>
@@ -196,7 +205,7 @@ function extractPocketDetails(metadata) {
     return Object.keys(metadata).reduce((pockets, field) => {
         if (field.toLowerCase().includes("pockets")) {
             const pocketDetails = { type: field, classification: metadata[field] };
-            return [ ...pockets, pocketDetails ];
+            return [...pockets, pocketDetails];
         }
         return pockets;
     }, []);

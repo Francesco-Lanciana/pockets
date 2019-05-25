@@ -131,30 +131,13 @@ $screen-bp-mobile: $card-min-width + 30px;
         }
     }
 
-    .clothing-price {
+    .clothing-price-container {
         margin: 0;
         display: inline-block;
         vertical-align: top;
         min-width: 70px;
-        font-weight: 700;
         font-size: 0.875rem;
         letter-spacing: 0.075em;
-        color: #1c1c1c;
-
-        > :first-child {
-            margin-right: 8px;
-        }
-    }
-
-    .previous-price {
-        font-size: 0.75rem;
-        text-decoration: line-through;
-        color: grey;
-        font-weight: 500;
-    }
-
-    .clothing-price[data-discounted="true"] .current-price {
-        color: #6394f8;
     }
 
     .item-link {

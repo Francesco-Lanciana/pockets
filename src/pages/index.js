@@ -4,57 +4,25 @@ import Img from "gatsby-image";
 
 import SEO from "../components/seo";
 import Layout from "@components/Layout/Layout";
-
-import { getCurrencySymbol } from "@utils/currencyHelpers";
+import PriceDisplay from "@components/PriceDisplay/PriceDisplay";
 
 import "./index.scss";
 
-function getQualifiedPrice(currency, price, showCurrency=true) {
-    const currencySymbol = getCurrencySymbol(currency);
-    const qualifiedPrice = showCurrency ?
-        `${currency.toUpperCase()} ${currencySymbol}${(price / 100).toFixed(2)}` :
-        `${currencySymbol}${(price / 100).toFixed(2)}`;
-
-    return qualifiedPrice;
-}
-
-function parseQueryString(search) {
-    try {
-        const fieldValuePairs = search.slice(1).split("&");
-        const queryStringMap = fieldValuePairs.reduce((qsMap, fieldValuePair) => {
-            const [field, value] = fieldValuePair.split("=");
-            return { ...qsMap, [decodeURIComponent(field)]: decodeURIComponent(value) };
-        }, {});
-
-        return queryStringMap;
-    } catch (e) {
-        return {};
-    }
-}
-
 const IndexPage = ({ data, location }) => {
     const products = data.allStripeProduct.edges.map(({ node }) => node);
-    let filteredProducts = products;
+    const skus = data.allStripeSku.edges.map(({ node }) => node);
     const parsedQueryString = parseQueryString(location.search);
-    if (parsedQueryString["filter"]) {
-        filteredProducts = products.filter(
-            ({ metadata }) => metadata.type === parsedQueryString["filter"]
-        );
-    }
+    const filteredProducts = getFilteredProducts(products, parsedQueryString["filter"]);
 
-    //const selectedProducts = products.filter
     return (
         <Layout>
             <div className="list-page">
                 <main className="clothing-cards">
                     {filteredProducts.map((product) => {
-                        const relatedSkus = data.allStripeSku.edges.filter(
-                            ({ node }) => node.product.id === product.id
-                        );
-                        const rrpPrice = Math.min(...relatedSkus.map(({ node }) => node.price));
+                        const relatedSkus = skus.filter((sku) => sku.product.id === product.id);
+                        const rrpPrice = Math.min(...relatedSkus.map(({ price }) => price));
                         const discountedPrice = rrpPrice - product.metadata.discount;
-                        const isDiscounted = rrpPrice !== discountedPrice;
-                        const { currency } = relatedSkus[0].node;
+                        const { currency } = relatedSkus[0];
 
                         return (
                             <div className="clothing-card" key={product.id}>
@@ -75,15 +43,12 @@ const IndexPage = ({ data, location }) => {
                                     </div>
                                     <div className="clothing-details">
                                         <div className="clothing-name">{product.name}</div>
-                                        <div className="clothing-price" data-discounted={isDiscounted}>
-                                            <span className="current-price">
-                                                {getQualifiedPrice(currency, discountedPrice)}
-                                            </span>
-                                            {isDiscounted && (
-                                                <span className="previous-price">
-                                                    {getQualifiedPrice(currency, rrpPrice, false)}
-                                                </span>
-                                            )}
+                                        <div className="clothing-price-container">
+                                            <PriceDisplay
+                                                rrpPrice={rrpPrice}
+                                                discountedPrice={discountedPrice}
+                                                currency={currency}
+                                            />
                                         </div>
                                     </div>
                                 </Link>
@@ -102,6 +67,36 @@ const IndexPage = ({ data, location }) => {
         </Layout>
     );
 };
+
+/**
+ * Parses a query string, returning an object of field value pairs
+ * @param {string} queryString A URL query string that may or may not contain a question mark seperator
+ */
+function parseQueryString(queryString) {
+    try {
+        const queryStringTrimmed = queryString[0] === '?' ? queryString.slice(1) : queryString;
+        const fieldValuePairs = queryStringTrimmed.split("&");
+        const queryStringMap = fieldValuePairs.reduce((qsMap, fieldValuePair) => {
+            const [field, value] = fieldValuePair.split("=");
+            return { ...qsMap, [decodeURIComponent(field)]: decodeURIComponent(value) };
+        }, {});
+
+        return queryStringMap;
+    } catch (e) {
+        return {};
+    }
+}
+
+
+function getFilteredProducts(products, filter) {
+    let filteredProducts = products;
+
+    if (filter) {
+        filteredProducts = products.filter(({ metadata }) => metadata.type === filter);
+    }
+
+    return filteredProducts;
+}
 
 export const query = graphql`
     query {
