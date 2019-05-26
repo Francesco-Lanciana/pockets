@@ -98,7 +98,8 @@ const ShoppingCartProvider = ({ children }) => {
 
     useEffect(() => {
         function saveStateToLocalStorage() {
-            addToLocalStorage("cart", state.cart);
+            const trimmedCart = state.cart.filter((item) => item.quantity !== 0);
+            addToLocalStorage("cart", trimmedCart);
         }
 
         window.addEventListener("beforeunload", saveStateToLocalStorage);
