@@ -97,16 +97,8 @@ const ShoppingCartProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        function saveStateToLocalStorage() {
-            const trimmedCart = state.cart.filter((item) => item.quantity !== 0);
-            addToLocalStorage("cart", trimmedCart);
-        }
-
-        window.addEventListener("beforeunload", saveStateToLocalStorage);
-
-        return () => {
-            window.removeEventListener("beforeunload", saveStateToLocalStorage);
-        }
+        const trimmedCart = state.cart.filter((item) => item.quantity !== 0);
+        addToLocalStorage("cart", trimmedCart);
     }, [state.cart]);
 
     return (
