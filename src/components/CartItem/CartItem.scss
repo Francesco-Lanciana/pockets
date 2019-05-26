@@ -17,7 +17,7 @@ $quantity-btn-line-length: 8px;
     grid-gap: 10px 20px;
     grid-template-areas: "image metadata group";
 
-    @media screen and (max-width: 850px) {
+    @media screen and (max-width: 900px) {
         grid-template-columns: 110px 1fr;
         grid-template-areas: "image metadata"
                              "image group";
@@ -67,12 +67,14 @@ $quantity-btn-line-length: 8px;
         -webkit-line-clamp: 2; /* number of lines to show */
     }
 
-    .item-price {
+    .item-price-container {
         color: $main-color;
         font-weight: 700;
         margin-right: 8px;
         font-size: 1rem;
         line-height: calc(1.5rem + 2px);
+        align-items: center;
+        display: flex;
     }
 
     .item-quantity {
@@ -97,7 +99,7 @@ $quantity-btn-line-length: 8px;
         justify-content: space-around;
         //max-width: 200px;
 
-        @media screen and (max-width: 850px) {
+        @media screen and (max-width: 900px) {
             justify-content: flex-start;
         }
     }

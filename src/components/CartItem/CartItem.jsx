@@ -1,8 +1,8 @@
 import React from "react";
 import Img from "gatsby-image";
 
+import PriceDisplay from "@components/PriceDisplay/PriceDisplay";
 import { useMedia } from "@hooks/window-hooks";
-import { getCurrencySymbol } from "@utils/currencyHelpers";
 import supplierData from "@utils/supplierData";
 
 import "./CartItem.scss";
@@ -18,10 +18,11 @@ const CartItem = ({
     onQuantityChange,
     onRemoveItem,
 }) => {
-    const [showRemoveBtn] = useMedia("(min-width: 850px)", true, false);
-    const currencySymbol = getCurrencySymbol("aud");
+    const [showRemoveBtn] = useMedia("(min-width: 900px)", true, false);
     const imageData = image.childImageSharp.fluid;
-    const isImageCropped = (metadata.croppedBottom === "true") || (metadata.croppedTop === "true");
+    const isImageCropped = metadata.croppedBottom === "true" || metadata.croppedTop === "true";
+    const discountedPrice = price - metadata.discount;
+    const isOnSale = metadata.discount !== 0;
 
     function handleQuantityInputChange(id, value) {
         onQuantityChange(id, () => value);
@@ -32,7 +33,6 @@ const CartItem = ({
 
         onQuantityChange(id, () => boundValue);
     }
-
 
     return (
         <div className="cart-item">
@@ -68,12 +68,18 @@ const CartItem = ({
                         onClick={() => onQuantityChange(id, (q) => Math.min(q + 1, 9))}
                     />
                 </div>
-                <div className="item-price">{`${currencySymbol}${(price / 100).toFixed(2)}`}</div>
+                <div className="item-price-container">
+                    <PriceDisplay
+                        rrpPrice={price}
+                        discountedPrice={discountedPrice}
+                        currency="aud"
+                        showCurrencyCode={false}
+                        compactMode={true}
+                    />
+                </div>
             </div>
 
-            {showRemoveBtn && (
-                <button onClick={() => onRemoveItem(id)} className="close-btn"></button>
-            )}
+            {showRemoveBtn && <button onClick={() => onRemoveItem(id)} className="close-btn" />}
         </div>
     );
 };
