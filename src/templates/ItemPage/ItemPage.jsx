@@ -20,7 +20,7 @@ import "@reach/dialog/styles.css";
 const ItemPage = ({ data }) => {
     const skus = data.allStripeSku.edges.map(({ node }) => node);
 
-    const { onItemSelection } = useContext(ShoppingCartContext);
+    const { modifyCart } = useContext(ShoppingCartContext);
     const [selectedSku, setSelectedSku] = useState(null);
     const [showDialog, setShowDialog] = useState(false);
     const [addToCardPending, setAddToCardPending] = useState(false);
@@ -32,7 +32,6 @@ const ItemPage = ({ data }) => {
     const { currency } = skus[0];
     const rrpPrice = Math.min(...skus.map(({ price }) => price));
     const discountedPrice = rrpPrice - metadata.discount;
-
 
     const pocketDetails = extractPocketDetails(metadata);
 
@@ -46,14 +45,17 @@ const ItemPage = ({ data }) => {
             setAddToCardPending(true);
             menuButtonEl.current.click();
         } else {
-            onItemSelection("add", {
-                name,
-                size: selectedSku.attributes.size,
-                price: discountedPrice,
-                currency,
-                image: localFiles[0],
-                id: selectedSku.id,
-                metadata: metadata,
+            modifyCart({
+                type: "add",
+                payload: {
+                    name,
+                    size: selectedSku.attributes.size,
+                    price: discountedPrice,
+                    currency,
+                    image: localFiles[0],
+                    id: selectedSku.id,
+                    metadata: metadata,
+                },
             });
         }
     }
