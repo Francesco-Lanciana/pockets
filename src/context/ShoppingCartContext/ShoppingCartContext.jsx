@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { addToLocalStorage, removeFromLocalStorage } from "@utils/localStorageHelpers";
+import { addToLocalStorage, retrieveFromLocalStorage } from "@utils/localStorageHelpers";
 
 const initialContext = {
     itemsInCart: [],
@@ -10,7 +10,7 @@ const initialContext = {
 
 const ShoppingCartContext = React.createContext(initialContext);
 
-function reducer(state, action) {
+function cartReducer(state, action) {
     const { type, payload } = action;
     const cart = createDeepCopy(state.cart);
 
@@ -22,9 +22,11 @@ function reducer(state, action) {
         case "quantity": {
             const item = getItem(cart, payload.id);
             const updatedItem = modifyItemQuantity(item, payload.mutator);
-            addToLocalStorage(updatedItem.id, updatedItem);
 
             return { cart: updateItemInCart(cart, updatedItem) };
+        }
+        case "hydrate": {
+            return { cart: payload };
         }
         default:
             throw new Error("Invalid action attempted on items in shopping cart");
@@ -37,11 +39,9 @@ function addItemToCart(cart, item) {
 
     if (!itemInCart) {
         const newItem = { ...item, quantity: 1 };
-        addToLocalStorage(newItem.id, newItem);
         modifiedCart = [...cart, newItem];
     } else {
         const updatedItem = modifyItemQuantity(item, (quantity) => quantity + 1);
-        addToLocalStorage(updatedItem.id, updatedItem);
         modifiedCart = updateItemInCart(cart, updatedItem);
     }
 
@@ -50,7 +50,6 @@ function addItemToCart(cart, item) {
 
 function removeItemFromCart(cart, id) {
     const filteredCart = cart.filter((item) => item.id !== id);
-    removeFromLocalStorage(id);
 
     return filteredCart;
 }
@@ -83,13 +82,31 @@ function createDeepCopy(cart) {
 }
 
 const ShoppingCartProvider = ({ children }) => {
-    const [state, dispatch] = useReducer(reducer, { cart: [] });
+    const [state, dispatch] = useReducer(cartReducer, { cart: [] });
     const changeItemQuantity = (id, mutator) => dispatch({ type: "quantity", payload: { id, mutator } });
     const removeItem = (id) => dispatch({ type: "remove", payload: id });
 
+    function hydrateStateWithLocalStorage() {
+        const cart = retrieveFromLocalStorage("cart");
+
+        if (cart) dispatch({ type: "hydrate", payload: cart });
+    }
+
     useEffect(() => {
-        
+        hydrateStateWithLocalStorage();
     }, []);
+
+    useEffect(() => {
+        function saveStateToLocalStorage() {
+            addToLocalStorage("cart", state.cart);
+        }
+
+        window.addEventListener("beforeunload", saveStateToLocalStorage);
+
+        return () => {
+            window.removeEventListener("beforeunload", saveStateToLocalStorage);
+        }
+    }, [state.cart]);
 
     return (
         <ShoppingCartContext.Provider
