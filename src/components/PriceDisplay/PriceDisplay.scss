@@ -1,7 +1,8 @@
 .price-display {
-    color: #1c1c1c;
+    color: inherit;
     font-weight: 700;
     font-size: 1em;
+    display: flex;
 
     > :first-child {
         margin-right: 8px;
@@ -16,6 +17,11 @@
     
     &[data-discounted="true"] .current-price {
         color: #6394f8;
+    }
+
+    &[data-discount-below="true"] {
+        flex-direction: column;
+        line-height: 1em;
     }
 }
 

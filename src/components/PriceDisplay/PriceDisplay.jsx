@@ -4,12 +4,20 @@ import { getCurrencySymbol } from "@utils/currencyHelpers";
 
 import "./PriceDisplay.scss";
 
-const PriceDisplay = ({ rrpPrice, discountedPrice, currency }) => {
+const PriceDisplay = ({
+    rrpPrice,
+    discountedPrice,
+    currency,
+    compactMode = false,
+    showCurrencyCode = true,
+}) => {
     const isDiscounted = rrpPrice !== discountedPrice;
 
     return (
-        <div className="price-display" data-discounted={isDiscounted}>
-            <span className="current-price">{getQualifiedPrice(currency, discountedPrice)}</span>
+        <div className="price-display" data-discounted={isDiscounted} data-discount-below={compactMode}>
+            <span className="current-price">
+                {getQualifiedPrice(currency, discountedPrice, showCurrencyCode)}
+            </span>
             {isDiscounted && (
                 <span className="previous-price">{getQualifiedPrice(currency, rrpPrice, false)}</span>
             )}
