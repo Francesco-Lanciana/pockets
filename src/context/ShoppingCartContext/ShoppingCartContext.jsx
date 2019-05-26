@@ -41,7 +41,7 @@ function addItemToCart(cart, item) {
         const newItem = { ...item, quantity: 1 };
         modifiedCart = [...cart, newItem];
     } else {
-        const updatedItem = modifyItemQuantity(item, (quantity) => quantity + 1);
+        const updatedItem = modifyItemQuantity(itemInCart, (quantity) => quantity + 1);
         modifiedCart = updateItemInCart(cart, updatedItem);
     }
 
