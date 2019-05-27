@@ -11,7 +11,6 @@ async function handler(event) {
         const skus = await retrieveSkus(skuIds);
         const areValidSkus = validateSkus(skus);
         if (!areValidSkus) throw new Error("One or more of these SKUs are not available for purchase");
-
         const lineItems = await generateLineItems(skus, quantities);
         const session = await createSession(lineItems);
 
@@ -20,7 +19,8 @@ async function handler(event) {
             body: JSON.stringify({ success: true, session }),
         };
     } catch (e) {
-        console.log(`Error functions/session: \n${e}`)
+        console.log(e);
+        
         return {
             statusCode: 500,
             body: JSON.stringify({ success: false }),
@@ -74,10 +74,15 @@ function validateSkus(skus) {
 async function generateLineItems(skus, quantities) {
     const lineItems = skus.map(({ id, attributes, product, image, price, currency }) => {
         const quantity = quantities[id] || 1;
+
+        /* We could easily forget to select an image for an SKU, this makes a second attempt to
+        grab from the image because it's highly unlikely we forgot to add images to the product */
+        const skuImage = image || product.images[0];
+
         return {
             name: `${product.name} - ${attributes.size}`,
             description: product.description,
-            images: [image],
+            images: [skuImage],
             amount: price,
             currency: currency,
             quantity: quantity,
