@@ -30,6 +30,9 @@ export function useMedia(queries, values, defaultValue) {
             const handler = () => setValue(getValue);
             // Set a listener for each media query with above handler as callback.
             mediaQueryLists.forEach((mql) => mql.addListener(handler));
+
+            setValue(getValue);
+
             // Remove listeners on cleanup
             return () => mediaQueryLists.forEach((mql) => mql.removeListener(handler));
         },
