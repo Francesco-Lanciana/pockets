@@ -15,7 +15,7 @@ const CheckoutNavBar = () => {
             <div className="navbar-content">
                 <Link to="/" className="back-link">
                     <span className="back-arrow-container"><BackArrow /></span>
-                    <span className="navbar-link-text">{smallScreen ? "Back" : "Continue Shopping"}</span>
+                    <span className="navbar-link-text">{smallScreen ? "Shop" : "Continue Shopping"}</span>
                 </Link>
                 <Link to="/" className="logo-container">
                     <img src={logo} className="logo" />
