@@ -20,6 +20,7 @@ async function handler(event) {
             body: JSON.stringify({ success: true, session }),
         };
     } catch (e) {
+        console.log(`Error functions/session: \n${e}`)
         return {
             statusCode: 500,
             body: JSON.stringify({ success: false }),
