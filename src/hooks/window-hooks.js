@@ -13,7 +13,9 @@ export function useMedia(queries, values, defaultValue) {
         // Get index of first media query that matches
         const index = mediaQueryLists.findIndex((mql) => mql.matches);
 
-        if (isSingleQuery && isSingleValue) return index === 0 ? values : defaultValue;
+        if (isSingleQuery && isSingleValue) {
+            return index === 0 ? values : defaultValue;
+        }
 
         // Return related value or defaultValue if none
         return typeof values[index] !== "undefined" ? values[index] : defaultValue;
