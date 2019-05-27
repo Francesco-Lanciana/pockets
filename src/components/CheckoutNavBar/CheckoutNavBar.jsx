@@ -8,7 +8,7 @@ import BackArrow from "@images/long-arrow-left-light.svg";
 import "./CheckoutNavBar.scss";
 
 const CheckoutNavBar = () => {
-    const [smallScreen] = useMedia("(max-width: 530px)", true, false);
+    const [smallScreen] = useMedia(["(max-width: 530px)"], [true], false);
 
     return (
         <header className="checkout-nav-bar">

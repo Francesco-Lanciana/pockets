@@ -18,7 +18,7 @@ const CartItem = ({
     onQuantityChange,
     onRemoveItem,
 }) => {
-    const [showRemoveBtn] = useMedia("(min-width: 900px)", true, false);
+    const [showRemoveBtn] = useMedia(["(min-width: 900px)"], [true], false);
     const imageData = image.childImageSharp.fluid;
     const isImageCropped = metadata.croppedBottom === "true" || metadata.croppedTop === "true";
     const discountedPrice = price - metadata.discount;

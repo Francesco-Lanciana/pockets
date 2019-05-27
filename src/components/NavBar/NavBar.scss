@@ -244,4 +244,15 @@ $nav-height: 60px;
         opacity: 0.01;
         transition: opacity 200ms ease-out;
     }
+
+    // TEMP FIX UNTIL I FIGURE OUT THIS DAMN ATTRIBUTE ISSUE
+    @media screen and (max-width: 800px) {
+        .navbar-content {
+            padding: 15px 20px !important;
+        }
+
+        .navbar-content .logo-container {
+            flex: 1 1 auto !important;
+        }
+    }
 }
