@@ -25,7 +25,7 @@ const CheckoutPage = () => {
     useEffect(() => {
         stripe =
             stripe ||
-            window.Stripe("pk_test_GMu2GHlqqnAFu9bWQwEYCkQG00Z3HIFFSj", {
+            window.Stripe(process.env.STRIPE_PUBLIC_KEY, {
                 betas: ["checkout_beta_4"],
             });
     }, []);
