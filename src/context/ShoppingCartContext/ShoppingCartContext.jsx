@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect } from "react";
-import { addToLocalStorage, retrieveFromLocalStorage } from "@utils/localStorageHelpers";
+import { addToLocalStorage, retrieveFromLocalStorage, removeFromLocalStorage } from "@utils/localStorageHelpers";
 
 const initialContext = {
     itemsInCart: [],
@@ -27,6 +27,10 @@ function cartReducer(state, action) {
         }
         case "hydrate": {
             return { cart: payload };
+        }
+        case "empty": {
+            removeFromLocalStorage("cart");
+            return { cart: [] };
         }
         default:
             throw new Error("Invalid action attempted on items in shopping cart");
@@ -93,6 +97,10 @@ const ShoppingCartProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        // We don't want to hydrate on the success page because it causes a race condition
+        // when we try to clear the cart
+        if (window.location.pathname === "/purchase/success") return;
+
         hydrateStateWithLocalStorage();
     }, []);
 
