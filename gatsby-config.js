@@ -1,16 +1,12 @@
 const path = require("path");
 
-// require("dotenv").config({
-//     path: `.env.${process.env.NODE_ENV}`,
-// });
-
 require("dotenv").config();
 
 module.exports = {
     siteMetadata: {
         title: `Pockets`,
         description: `Functional style for every woman`,
-        author: `@francescol`,
+        author: `@francescol`
     },
     plugins: [
         `gatsby-plugin-react-helmet`,
