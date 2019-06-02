@@ -41,7 +41,7 @@ $quantity-btn-line-length: 8px;
     .shopping-cart-items {
         padding-top: $shopping-cart-items-padding;
         max-height: 311px;
-        overflow-y: scroll;
+        overflow-y: auto;
         position: relative;
         flex: 1 1 auto;
         max-width: none;
