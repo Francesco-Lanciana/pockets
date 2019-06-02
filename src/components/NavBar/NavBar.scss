@@ -208,6 +208,10 @@ $nav-height: 60px;
         > .shopping-cart {
             height: 100%;
         }
+
+        .shopping-cart-items {
+            max-height: none;
+        }
     }
 
     .menu-icon-container {
