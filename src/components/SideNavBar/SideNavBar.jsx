@@ -16,6 +16,7 @@ const isNavItem = matchComponent(NavItem);
 const SideNavBar = ({ children, onSelectItem, selectedItemId, hidden }) => {
     const navItems = filterChildrenByRule(children, (child) => isNavItem(child));
     const wrappedNavItems = React.Children.map(navItems, (navItem) => <li>{navItem}</li>);
+    
 
     return (
         <selectedItemContext.Provider value={{ selectedItemId, onSelectItem }}>

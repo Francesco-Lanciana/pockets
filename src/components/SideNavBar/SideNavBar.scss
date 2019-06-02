@@ -23,10 +23,12 @@ $light-text: rgb(112, 112, 112);
         transform: translateX(-#{$side-nav-width});
     }
 
+
+
     .top-level-items-container {
         height: 100%;
         overflow-y: scroll;
-        background: black;
+        background: linear-gradient(#00111e 30%, #033d5e);
         color: white;
     }
 
