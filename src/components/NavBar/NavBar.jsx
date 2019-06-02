@@ -8,6 +8,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { Link, navigate } from "gatsby";
 import { CSSTransition } from "react-transition-group";
 
+import NavLink from "@components/NavLink/NavLink";
 import ShoppingCart from "@components/ShoppingCart/ShoppingCart";
 import { useMedia, useScrollBasedPin } from "@hooks/window-hooks";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
@@ -68,19 +69,19 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
                     <nav className="site-navigation-container">
                         <ul className="site-navigation-links">
                             <li className="site-navigation-link">
-                                <Link to="/">All</Link>
+                                <NavLink to="/">All</NavLink>
                             </li>
                             <li className="site-navigation-link">
-                                <Link to="/?filter=pants">Pants</Link>
+                                <NavLink to="/?filter=pants">Pants</NavLink>
                             </li>
                             <li className="site-navigation-link">
-                                <Link to="/?filter=shorts">Shorts</Link>
+                                <NavLink to="/?filter=shorts">Shorts</NavLink>
                             </li>
                             <li className="site-navigation-link">
-                                <Link to="/?filter=skirts">Skirts</Link>
+                                <NavLink to="/?filter=skirts">Skirts</NavLink>
                             </li>
                             <li className="site-navigation-link">
-                                <Link to="/?filter=leggings">Leggings</Link>
+                                <NavLink to="/?filter=leggings">Leggings</NavLink>
                             </li>
                         </ul>
                     </nav>
