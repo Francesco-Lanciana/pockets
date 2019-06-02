@@ -45,6 +45,8 @@ $quantity-btn-line-length: 8px;
         position: relative;
         flex: 1 1 auto;
         max-width: none;
+        position: relative;
+        padding-bottom: 15px;
 
         li + li {
             margin-top: 18px;
@@ -77,6 +79,16 @@ $quantity-btn-line-length: 8px;
             color: $light-text;
             font-size: 14px;
         }
+    }
+
+    .shopping-cart-items::after {
+        position: fixed;
+        left: 0;
+        width: 100%;
+        content: "";
+        height: 18px;
+        bottom: 83px;
+        background: linear-gradient(to bottom, #ffffff00, #ffffff);
     }
 
     .shopping-cart-item {
