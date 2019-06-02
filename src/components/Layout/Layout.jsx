@@ -31,12 +31,15 @@ const Layout = ({ children, offscreenNavBar = false }) => {
 
     return (
         <div className="layout">
-            <NavBar onToggleMenu={handleToggleMenu} alwaysPinned={!offscreenNavBar}/>
+            <NavBar onToggleMenu={handleToggleMenu} alwaysPinned={!offscreenNavBar} />
             <SideNavBar
                 onSelectItem={handleSelectItem}
                 selectedItemId={selectedItemId}
                 hidden={isMenuHidden}
             >
+                <NavItem to="/" id="all">
+                    All
+                </NavItem>
                 <NavItem to="/?filter=pants" id="pants">
                     Pants
                 </NavItem>
@@ -53,9 +56,7 @@ const Layout = ({ children, offscreenNavBar = false }) => {
             <CSSTransition classNames="fade" timeout={200} in={!isMenuHidden} unmountOnExit>
                 <div className="mobile-overlay" onClick={handleToggleMenu} />
             </CSSTransition>
-            <div className="contents">
-                {children}
-            </div>
+            <div className="contents">{children}</div>
             <Footer />
         </div>
     );
