@@ -84,7 +84,7 @@ $quantity-btn-line-length: 8px;
     .shopping-cart-items::after {
         position: fixed;
         left: 0;
-        width: 100%;
+        width: 95%; // It appears ontop of the scrollbar so make it a little shorter
         content: "";
         height: 18px;
         bottom: 83px;
