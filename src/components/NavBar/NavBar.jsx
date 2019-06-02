@@ -23,7 +23,7 @@ const NavBar = ({ onToggleMenu, alwaysPinned = true }) => {
     const { itemsInCart } = useContext(ShoppingCartContext);
     const [showMenu, setShowMenu] = useMedia(["(max-width: 800px)"], [true], false);
     const [showCartText] = useMedia(["(max-width: 330px)"], [false], true);
-    const [useFullScreenCart] = useMedia(["(max-height: 580px)"], [true], false);
+    const [useFullScreenCart] = useMedia(["(max-height: 580px), (max-width: 310px)"], [true], false);
     const isPinned = useScrollBasedPin(true, { pinThreshold: 50 });
     const showNavLinks = !showMenu;
 
