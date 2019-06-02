@@ -6,7 +6,7 @@ $card-content-padding-sm: 20px;
 $screen-bp-large: $card-min-width * 3 + $card-gap * 2 + $card-content-padding-lg * 2 + 20px;
 $screen-bp-med: $card-min-width * 2 + $card-gap * 1 + $card-content-padding-lg * 2 + 20px;
 $screen-bp-sm: 570px;
-$screen-bp-mobile: $card-min-width + 30px;
+$screen-bp-mobile: 250px;
 
 .list-page {
     .navbar {
