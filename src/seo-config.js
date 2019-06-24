@@ -11,8 +11,8 @@ const DEFAULT_SEO = {
         image:
             "https://images.unsplash.com/photo-1516756587022-7891ad56a8cd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=3334&q=80",
         site_name: "Pockets",
-        imageWidth: "533",
-        imageHeight: "800",
+        imageWidth: "333",
+        imageHeight: "600",
     },
     twitter: {
         handle: "@pocketsfashion",

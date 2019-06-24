@@ -31,11 +31,12 @@ exports.createPages = ({ graphql, actions }) => {
         // Create clothing item pages.
         result.data.allStripeProduct.edges.forEach(({ node: product }) => {
             const { id } = product;
+            const urlPath = `clothing/${id}`;
 
             createPage({
-                path: `clothing/${id}`,
+                path: urlPath,
                 component: itemPageTemplate,
-                context: { id },
+                context: { id, url: `https://pockets.fashion/${urlPath}` },
             });
         });
 

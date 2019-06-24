@@ -36,28 +36,30 @@ const generateBlogJSONLD = ({ title, description, url, imageUrl, datePublished, 
     };
 };
 
-const generateItemJSONLD = ({ name, description, category, price, currency, imageUrl, sku }) => {
+const generateItemJSONLD = ({ name, description, price, currency, imageUrl, sku, url }) => {
     return {
         "@context": "http://schema.org",
-        "@type": "WebPage",
-        mainEntityOfPage: {
-            "@type": "Product",
-            name,
-            description,
-            category,
-            sku,
-            image: imageUrl,
-            offers: {
-                "@type": "Offer",
-                availability: "http://schema.org/InStock",
-                price,
-                priceCurrency: currency,
-            },
+        "@type": "Product",
+        name,
+        description,
+        sku,
+        productId: sku,
+        image: imageUrl,
+        itemCondition: "http://schema.org/NewCondition",
+        // brand: {
+        //     name: "",
+        // },
+        offers: {
+            "@type": "Offer",
+            availability: "http://schema.org/InStock",
+            price,
+            priceCurrency: currency,
+            //eligibleRegion: "AU",
+            url,
+            seller: {
+                name: "Pockets"
+            }
         },
-        primaryImageOfPage: {
-            "@type": "ImageObject",
-            contentUrl: imageUrl,
-        }
     };
 };
 

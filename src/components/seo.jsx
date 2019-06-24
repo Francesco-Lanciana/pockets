@@ -14,12 +14,13 @@ import { generateJSONLD } from '@utils/seo';
 
 const SEO = React.memo(({ type, metadata={}}) => {
     const schemaOrgJSONLD = generateJSONLD(type)(metadata);
+    const title = metadata.name ? `${metadata.name} | ${DEFAULT_SEO.openGraph.title}` : DEFAULT_SEO.openGraph.title;
 
     return (
         <Helmet>
             {/* General tags */}
-            <title key="title">{DEFAULT_SEO.title}</title>
-            <meta key="description" name="description" content={DEFAULT_SEO.description} />
+            <title key="title">{title}</title>
+            <meta key="description" name="description" content={metadata.description || DEFAULT_SEO.description} />
 
             {/* Schema.org tags */}
             <script type="application/ld+json">{JSON.stringify(schemaOrgJSONLD)}</script>
@@ -27,27 +28,27 @@ const SEO = React.memo(({ type, metadata={}}) => {
             {/* Twitter Card tags */}
             <meta key="twitter:card" name="twitter:card" content={DEFAULT_SEO.twitter.cardType} />
             <meta key="twitter:site" name="twitter:site" content={DEFAULT_SEO.twitter.handle} />
-            <meta key="twitter:title" name="twitter:title" content={DEFAULT_SEO.twitter.title} />
+            <meta key="twitter:title" name="twitter:title" content={title} />
             <meta
                 key="twitter:description"
                 name="twitter:description"
-                content={DEFAULT_SEO.twitter.description}
+                content={metadata.description || DEFAULT_SEO.twitter.description}
             />
 
             {/* OpenGraph tags */}
-            <meta key="og:url" property="og:url" content={DEFAULT_SEO.openGraph.url} />
+            <meta key="og:url" property="og:url" content={metadata.url || DEFAULT_SEO.openGraph.url} />
             <meta key="og:type" property="og:type" content={DEFAULT_SEO.openGraph.type} />
-            <meta key="og:title" property="og:title" content={DEFAULT_SEO.openGraph.title} />
+            <meta key="og:title" property="og:title" content={title} />
             <meta
                 key="og:description"
                 property="og:description"
-                content={DEFAULT_SEO.openGraph.description}
+                content={metadata.description || DEFAULT_SEO.openGraph.description}
             />
-            <meta key="og:image" property="og:image" content={DEFAULT_SEO.openGraph.image} />
+            <meta key="og:image" property="og:image" content={metadata.imageUrl || DEFAULT_SEO.openGraph.image} />
             <meta
                 key="og:image:width"
                 property="og:image:width"
-                content={DEFAULT_SEO.openGraph.imageWidth}
+                content={DEFAULT_SEO.openGraph.imageHeight * metadata.aspectRatio}
             />
             <meta
                 key="og:image:height"

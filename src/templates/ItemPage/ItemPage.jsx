@@ -17,7 +17,7 @@ import "./ItemPage.scss";
 import "@reach/menu-button/styles.css";
 import "@reach/dialog/styles.css";
 
-const ItemPage = ({ data }) => {
+const ItemPage = ({ data, pageContext }) => {
     const skus = data.allStripeSku.edges.map(({ node }) => node);
 
     const { modifyCart } = useContext(ShoppingCartContext);
@@ -108,12 +108,14 @@ const ItemPage = ({ data }) => {
                 <SEO
                     type="item"
                     metadata={{
-                        name: name,
-                        description: description,
+                        name,
+                        description,
                         price: discountedPrice,
                         currency,
                         imageUrl: localFiles[0].childImageSharp.fluid.src,
-                        sku: id, // Fix this
+                        sku: id,
+                        url: pageContext.url,
+                        aspectRatio: localFiles[0].childImageSharp.fluid.aspectRatio,
                     }}
                 />
 
