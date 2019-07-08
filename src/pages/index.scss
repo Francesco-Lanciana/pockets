@@ -18,13 +18,23 @@ $screen-bp-mobile: 250px;
         width: 255px;
     }
 
+    .main-statement-container {
+        color: white;
+        margin-bottom: 25px;
+        background: #ffb7aa;
+    }
+
+    .main-statement-inner-container {
+        max-width: 2400px;
+        margin: 0 auto;
+    }
+
     .clothing-cards {
         display: grid;
         grid-gap: 20px;
         grid-template-columns: repeat(auto-fill, minmax(#{$card-min-width}, 1fr));
         max-width: 2400px;
         margin: 0 auto;
-        padding: 0 7% 30px;
         justify-items: stretch;
         padding: 40px;
 
@@ -37,7 +47,7 @@ $screen-bp-mobile: 250px;
         }
 
         @media screen and (max-width: #{$screen-bp-sm}) {
-            padding: 20px 0px;
+            padding: 40px 0 20px 0px;;
             grid-gap: 15px;
         }
 

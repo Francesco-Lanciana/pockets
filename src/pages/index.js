@@ -5,6 +5,7 @@ import Img from "gatsby-image";
 import SEO from "../components/seo";
 import Layout from "@components/Layout/Layout";
 import PriceDisplay from "@components/PriceDisplay/PriceDisplay";
+import MainBanner from "@components/MainBanner/MainBanner";
 
 import "./index.scss";
 
@@ -17,6 +18,11 @@ const IndexPage = ({ data, location }) => {
     return (
         <Layout>
             <div className="list-page">
+                <div className="main-statement-container">
+                    <div className="main-statement-inner-container">
+                        <MainBanner />
+                    </div>
+                </div>
                 <main className="clothing-cards">
                     {filteredProducts.map((product) => {
                         const relatedSkus = skus.filter((sku) => sku.product.id === product.id);
