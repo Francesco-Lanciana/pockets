@@ -47,7 +47,6 @@ const CartItem = ({
             <div className="shopping-cart-item-details">
                 <div className="item-name">{name}</div>
                 <div className="item-size">{`Size ${size}`}</div>
-                <div className="item-supplier">{`Supplier: ${metadata.supplier}`}</div>
             </div>
             <div className="detail-grouping">
                 <div className="quantity-changer" data-quantity={quantity}>

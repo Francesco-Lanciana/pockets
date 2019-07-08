@@ -5,6 +5,7 @@ import CartItem from "@components/CartItem/CartItem";
 import ShoppingCartContext from "@context/ShoppingCartContext/ShoppingCartContext";
 import StripeApi from "@api/stripeApi";
 import { getCurrencySymbol } from "@utils/currencyHelpers";
+import supplierData from "@utils/supplierData";
 
 import "./checkout.scss";
 import "@styles/main.scss";
@@ -17,8 +18,22 @@ let stripe;
 const CheckoutPage = () => {
     const { itemsInCart, changeItemQuantity, removeItem } = useContext(ShoppingCartContext);
     const numItems = itemsInCart.reduce((total, { quantity }) => total + quantity, 0);
-    const cartIsEmpty = numItems === 0;
     const totalPrice = itemsInCart.reduce((total, { price, quantity }) => total + price * quantity, 0);
+    const suppliers = itemsInCart.reduce((suppliers, { metadata }) => suppliers.add(metadata.supplier), new Set());
+    const deliveryTimeBoundary = Array.from(suppliers).reduce((boundary, supplier) => {
+        const suppliersData = supplierData[supplier.toLowerCase()];
+        if (!suppliersData) return boundary;
+        let min = boundary.min;
+        let max = boundary.max;
+
+        if (!boundary.min || suppliersData.deliveryMin < boundary.min) min = suppliersData.deliveryMin;
+        if (!boundary.max ||suppliersData.deliveryMin > boundary.max) max = suppliersData.deliveryMax;
+
+        return { min, max };
+    }, { });
+
+    const numSuppliers = suppliers.size;
+    const cartIsEmpty = numItems === 0;
     const currencySymbol = getCurrencySymbol("aud");
     const qualifiedTotalPrice = `${currencySymbol}${(totalPrice / 100).toFixed(2)}`;
 
@@ -88,8 +103,15 @@ const CheckoutPage = () => {
                             <span>Total: </span>
                             <span>{qualifiedTotalPrice}</span>
                         </div>
-                        <div className="number-items">
+                        <div className="seperator" />
+                        <div className="number-items checkout-info">
                             {numItems} {numItems === 1 ? "item" : "items"}
+                        </div>
+                        <div className="number-suppliers checkout-info">
+                            {numSuppliers} {numSuppliers === 1 ? "supplier" : "suppliers"}
+                        </div>
+                        <div className="delivery-times checkout-info important">
+                            Delivery Time: {deliveryTimeBoundary.min} to {deliveryTimeBoundary.max} Days
                         </div>
                         <button className="checkout-btn" onClick={redirectToCheckout} disabled={cartIsEmpty}>
                             Go To Payment
