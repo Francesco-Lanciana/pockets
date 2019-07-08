@@ -5,7 +5,17 @@
         margin: 15px 0;
     }
 
-    hr {
-        margin-top: 1.8rem;
+    h2 {
+        margin-bottom: 5px;
+        margin-top: 25px;
+        line-height: 1.5;
+    }
+
+    li:not(:last-child) {
+        margin-bottom: 10px;
+    }
+
+    p + p {
+        margin-top: 10px;
     }
 }

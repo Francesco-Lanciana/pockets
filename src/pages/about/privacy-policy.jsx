@@ -43,16 +43,13 @@ const PrivacyPolicyPage = () => (
                     “Web beacons,” “tags,” and “pixels” are electronic files used to record information
                     about how you browse the Site.
                 </li>
-                [[INSERT DESCRIPTIONS OF OTHER TYPES OF TRACKING TECHNOLOGIES USED]]
             </ul>
             <p>
                 Additionally when you make a purchase or attempt to make a purchase through the Site, we
                 collect certain information from you, including your name, billing address, shipping
-                address, payment information (including credit card numbers [[INSERT ANY OTHER PAYMENT
-                TYPES ACCEPTED]]), email address, and phone number. We refer to this information as “Order
+                address, payment information (including credit card numbers), email address, and phone number. We refer to this information as “Order
                 Information.”
             </p>
-            [[INSERT ANY OTHER INFORMATION YOU COLLECT: OFFLINE DATA, PURCHASED MARKETING DATA/LISTS]]
             <p>
                 When we talk about “Personal Information” in this Privacy Policy, we are talking both about
                 Device Information and Order Information.
@@ -71,7 +68,6 @@ const PrivacyPolicyPage = () => (
                     When in line with the preferences you have shared with us, provide you with information
                     or advertising relating to our products or services.
                 </li>
-                [[INSERT OTHER USES OF ORDER INFORMATION]]
             </ul>
             <p>
                 We use the Device Information that we collect to help us screen for potential risk and
@@ -79,7 +75,6 @@ const PrivacyPolicyPage = () => (
                 (for example, by generating analytics about how our customers browse and interact with the
                 Site, and to assess the success of our marketing and advertising campaigns).
             </p>
-            [[INSERT OTHER USES OF DEVICE INFORMATION, INCLUDING: ADVERTISING/RETARGETING]]
             <h2>SHARING YOUR PERSONAL INFORMATION</h2>
             <p>
                 We share your Personal Information with third parties to help us use your Personal
@@ -101,6 +96,13 @@ const PrivacyPolicyPage = () => (
                 regulations, to respond to a subpoena, search warrant or other lawful request for
                 information we receive, or to otherwise protect our rights.
             </p>
+            <h2>PAYMENT PROCESSING</h2>
+            <p>
+                We use Stripe for payment, analytics, and other business services. Stripe collects
+                identifying information about the devices that connect to its services. Stripe uses
+                this information to operate and improve the services it provides to us, including
+                for fraud detection. You can learn more about Stripe and read its privacy policy
+                at <a href="https://stripe.com/privacy">https://stripe.com/privacy.</a></p>
             <h2>DO NOT TRACK</h2>
             <p>
                 Please note that we do not alter our Site’s data collection and use practices when we see a

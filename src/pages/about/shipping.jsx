@@ -12,7 +12,7 @@ const ShippingPage = () => (
 
             <h2>SHIPPING COSTS</h2>
             <p>Shipping is FREE worldwide!</p>
-            <p>Estimated delivery times are based on the geographical location and vary from 5-7 business days in the USA, Canada, and 15-20 business days for the rest of the world. We know this is slow, rest assured we are constantly aiming to improve these times.</p>
+            <p>Our suppliers are primarily based in Australia, however we do have a few others spread around the globe. Estimated delivery times are based on your geographical location and vary from 2-15 business days in Australia, 5-15 business days in the USA, Canada, and 15-20 business days for the rest of the world. We know this is slow, rest assured we are constantly aiming to improve these times.</p>
             <p>Pockets is not liable for any customs duties, import duties, quotas or permits, product restrictions and other local requirements. The customer or recipient of the package is required to pay at time of delivery.</p>
 
             <h2>MISHANDLING</h2>
