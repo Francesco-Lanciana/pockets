@@ -22,6 +22,7 @@ const CartItem = ({
     const imageData = image.childImageSharp.fluid;
     const isImageCropped = metadata.croppedBottom === "true" || metadata.croppedTop === "true";
     const discountedPrice = price - metadata.discount;
+    const itemSupplierData = supplierData[metadata.supplier.toLowerCase()];
     const isOnSale = metadata.discount !== 0;
 
     function handleQuantityInputChange(id, value) {
@@ -47,6 +48,9 @@ const CartItem = ({
             <div className="shopping-cart-item-details">
                 <div className="item-name">{name}</div>
                 <div className="item-size">{`Size ${size}`}</div>
+                {!itemSupplierData.international && (
+                    <div className="item-shipping">Australia Only</div>
+                )}
             </div>
             <div className="detail-grouping">
                 <div className="quantity-changer" data-quantity={quantity}>

@@ -9,7 +9,7 @@ const metadata = {
     },
     "the iconic": {
         deliveryMin: 1,
-        deliveryMax: 5,
+        deliveryMax: 7,
         returns: "unused",
         saleItemReturns: true,
         returnShippingFee: false,
