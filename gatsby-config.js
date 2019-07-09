@@ -6,9 +6,11 @@ module.exports = {
     siteMetadata: {
         title: `Pockets`,
         description: `Functional style for every woman`,
-        author: `@francescol`
+        author: `@francescol`,
+        siteUrl: "https://pockets.fashion"
     },
     plugins: [
+        `gatsby-plugin-sitemap`,
         `gatsby-plugin-react-helmet`,
         {
             resolve: `gatsby-source-filesystem`,
